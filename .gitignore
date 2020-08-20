@@ -1,8 +1,8 @@
 *.meta
 .vs/
 *.sln
-*.csproject
-*.csproj
+*.csproject*
+*.csproj*
 *.log
 Library/
 *.cache
