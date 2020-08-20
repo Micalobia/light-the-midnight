@@ -4,7 +4,4 @@
 *.csproject
 *.csproj
 *.log
-Library/Artifacts/
-Library/TempArtifacts/
-*cache*
-*Cache*
+Library/
