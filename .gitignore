@@ -1,1 +1,6 @@
 *.meta
+.vs/
+*.sln
+*.csproject
+*.csproj
+*.log
