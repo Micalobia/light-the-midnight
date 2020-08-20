@@ -5,3 +5,4 @@
 *.csproj
 *.log
 Library/
+*.cache
