@@ -6,5 +6,4 @@
 *.log
 Library/
 *.cache
-*.temp
-*[Tt]emporary*
+*[Tt]emp*
