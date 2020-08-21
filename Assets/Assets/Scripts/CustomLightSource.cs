@@ -6,12 +6,12 @@ public class CustomLightSource : MonoBehaviour
 {
     [SerializeField] public float FOV = 90f;
     [SerializeField] public float ViewDistance = 3f;
-    //[SerializeField] public float Angle = 0f;
+    [SerializeField] public float Angle = 0f;
     [SerializeField] public LayerMask LayerMask;
 
     private Vector3 origin = Vector3.zero;
     private int rayCount = 360;
-    private float startingAngle => transform.eulerAngles.z + FOV / 2f;
+    private float startingAngle => Angle - FOV / 2f;
 
     private Mesh mesh;
     public Mesh Mesh => mesh;
@@ -54,7 +54,7 @@ public class CustomLightSource : MonoBehaviour
         int[] triangles = new int[rayCount * 3];
 
         vertices[0] = Vector3.zero;
-        float angle = startingAngle;
+        float angle = -startingAngle;
         int vertexIndex = 1, triangleIndex = 0;
         float angleChange = FOV / rayCount;
         int mask = LayerMask.GetMask("Level");
@@ -66,7 +66,7 @@ public class CustomLightSource : MonoBehaviour
             vertex = (rayHit.collider == null) ? origin + vecAng * ViewDistance : (Vector3)rayHit.point; //Get where we hit if we hit, otherwise just put the point at our view distance
             //Debug.DrawRay(origin, vertex);
             //if (rayHit.collider != null) Debug.Log("Hit somethin'");
-            vertices[vertexIndex] = (vertex - transform.position).Rotate(-transform.eulerAngles.z);
+            vertices[vertexIndex] = vertex - transform.position;
             if (i != 0)
             {
                 triangles[triangleIndex] = 0;

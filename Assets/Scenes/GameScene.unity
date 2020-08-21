@@ -195,7 +195,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1a4c8fab766a52546b4a23302f20849a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3ae3c26e45bc27f48a5e57e3600e4bbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -266,7 +266,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 5.88, y: 11.78}
-    newSize: {x: 5.88, y: 11.78}
+    newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -314,12 +314,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: efc556f9aae55f345919b3ec88c76b8d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bce5b0eb023419f4bad358b7b9ed993c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.88, y: 11.78}
+  m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 629629295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29aaf0e573fb36049adcfdddef096e4a, type: 3}
+  m_Script: {fileID: 11500000, guid: ebc94f00bd5613b46820a5ef811ed451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
@@ -368,11 +368,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 629629295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7294ebe0dd2ceac4994b45a645ebc20b, type: 3}
+  m_Script: {fileID: 11500000, guid: d6fa0a37b1c6ad44395355474d3269e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserPoint: {fileID: 1229009546}
-  impact: {fileID: 8597233977548713480, guid: 983705f43adb9eb418fc914a90bcf98b, type: 3}
+  impact: {fileID: 8597233977548713480, guid: 461df25a2caeb4b45bc1a7adee053b70, type: 3}
 --- !u!1 &868356256
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,8 +588,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1229009545}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.099999, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 202965771}
@@ -618,8 +618,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1765655365}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.56, y: 0.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 202965771}
@@ -654,11 +654,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1884632113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abe4b2f7f713830488107e99df4684cf, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d661799e9bf4a7419abd2a8552fc474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FOV: 90
   ViewDistance: 3
+  Angle: 0
   LayerMask:
     serializedVersion: 2
     m_Bits: 0
