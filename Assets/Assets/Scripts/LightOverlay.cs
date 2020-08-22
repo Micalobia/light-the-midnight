@@ -16,7 +16,7 @@ public class LightOverlay : MonoBehaviour
     public GameObject LightSprite;
     public GameObject DarkSprite;
     public GameObject sourceGroup;
-    
+
 
     private static Vector2[] MeshToVec(Mesh mesh)
     {
@@ -40,7 +40,7 @@ public class LightOverlay : MonoBehaviour
 
     void Update()
     {
-       // List<GameObject> sources = child
+        // List<GameObject> sources = child
     }
 }
 
