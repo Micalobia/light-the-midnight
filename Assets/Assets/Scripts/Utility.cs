@@ -7,24 +7,24 @@ using UnityEngine;
 
 static class Utility
 {
-    public Vector2[] PolygonUnion(Vector2[] a, Vector2[] b)
-    {
-        List<Line> la = new List<Line>(a.Length);
-        List<Line> lb = new List<Line>(b.Length);
-        for (int i = 1; i < a.Length; i++) la.Add(new Line(a[i - 1], a[i]));
-        for (int i = 1; i < b.Length; i++) lb.Add(new Line(b[i - 1], b[i]));
-        la.Add(new Line(a.Last(), a[0]));
-        lb.Add(new Line(b.Last(), b[0]));
-        for(int i = 0; i < la.Count; i++)
-            for(int j = 0; j < lb.Count; j++)
-            {
-                Vector2? _vec;
-                _vec = Line.Intersection(la[i], lb[i]);
-                if (_vec == null) continue;
-                Vector2 vec = (Vector2)_vec;
+    //public static Vector2[] PolygonUnion(Vector2[] a, Vector2[] b)
+    //{
+    //    List<Line> la = new List<Line>(a.Length);
+    //    List<Line> lb = new List<Line>(b.Length);
+    //    for (int i = 1; i < a.Length; i++) la.Add(new Line(a[i - 1], a[i]));
+    //    for (int i = 1; i < b.Length; i++) lb.Add(new Line(b[i - 1], b[i]));
+    //    la.Add(new Line(a.Last(), a[0]));
+    //    lb.Add(new Line(b.Last(), b[0]));
+    //    for(int i = 0; i < la.Count; i++)
+    //        for(int j = 0; j < lb.Count; j++)
+    //        {
+    //            Vector2? _vec;
+    //            _vec = Line.Intersection(la[i], lb[i]);
+    //            if (_vec == null) continue;
+    //            Vector2 vec = (Vector2)_vec;
 
-            }
-    }
+    //        }
+    //}
 }
 
 public struct Line

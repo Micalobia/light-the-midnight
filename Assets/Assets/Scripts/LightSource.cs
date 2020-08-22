@@ -57,14 +57,44 @@ public class LightSource : MonoBehaviour
 
     Mesh GenerateMesh()
     {
-        Vector3[] vertices = new Vector3[RayCount + 2];
-        Vector2[] uv = new Vector2[vertices.Length];
-        int[] triangles = new int[RayCount * 3];
+        List<Vector3> vertices = new List<Vector3>(RayCount * 2);
+        List<int> triangles = new List<int>();
 
         vertices[0] = Vector3.zero;
         float angle = startingAngle;
         int vertexIndex = 1, triangleIndex = 0;
         float angleChange = FOV / RayCount;
+
+        Vector3?[][] verts = new Vector3?[RayCount + 2][];
+        for (int i = 0; i <= RayCount; i++)
+        {
+            Vector3 ang = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            angle -= angleChange;
+            Vector3?[] cast = CastRay(ang);
+            verts[i] = cast;
+        }
+        for (int i = 0; i < RayCount; i++)
+        {
+            Vector3 vertex = verts[0][i+1] ?? Vector3.zero;
+            vertices.Add((vertex - transform.position).Rotate(-transform.eulerAngles.z));
+            if (i != 0)
+            {
+                triangles.Add(0);
+                triangles.Add(vertexIndex - 1);
+                triangles.Add(vertexIndex);
+                triangleIndex += 3;
+            }
+            vertexIndex++;
+        }
+        for (int i = 1; i < 4; i++)
+            for (int j = 0; j <= RayCount; j++)
+            {
+                Vector3? verty = verts[i][vertexIndex];
+            }
+
+
+        Vector2[] uv = new Vector2[vertices.Length];
+
         for (int i = 0; i <= RayCount; i++)
         {
             Vector3 vecAng = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
@@ -87,22 +117,24 @@ public class LightSource : MonoBehaviour
         return mesh;
     }
 
-    private Vector3 CastRay(Vector3 angle, float? _distance = null, Vector3? _origin = null, int depth = 4)
+    private Vector3?[] CastRay(Vector3 angle, float? _distance = null, Vector3? _origin = null, int depth = 4)
     {
         float distance = _distance ?? ViewDistance;
         Vector3 origin = _origin ?? this.origin;
-        RaycastHit2D rayHit = Physics2D.Raycast(origin + angle, angle, distance, LayerMask);
-        if(rayHit.collider)
+        RaycastHit2D rayHit = Physics2D.Raycast(origin, angle, distance, LayerMask);
+        Vector3?[] ret = new Vector3?[depth];
+        if (rayHit)
         {
             int layer = 1 << rayHit.collider.gameObject.layer;
-            Vector2 vec = rayHit.point;
-            if (depth == 0) return vec;
-            Debug.DrawLine(vec, vec + (Vector2)angle);
-            if (layer == opaque) return vec;
-            Vector3 normal = new Vector3(rayHit.normal.x, rayHit.normal.y);
-            Vector3 reflectionAngle = angle - (2*Vector3.Dot(angle, normal)*normal);
-            return CastRay(reflectionAngle, ViewDistance - rayHit.distance, vec, depth - 1);
+            ret[0] = rayHit.point;
+            if(depth == 1 || layer == opaque) return ret;
+            Vector3 norm = rayHit.normal;
+            Vector3 refAng = angle-2*Vector3.Dot(angle,norm)*norm;
+            Vector3?[] cast = CastRay(refAng, distance - rayHit.distance, ret[0], depth - 1);
+            for (int i = 0; i < cast.Length; i++) ret[i + 1] = cast[i];
+            return ret;
         }
-        return origin + angle * ViewDistance;
+        ret[0] = origin + angle * distance;
+        return ret;
     }
 }
