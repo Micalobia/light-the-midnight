@@ -48,7 +48,8 @@ public static class VectorExtension
     /// <returns>The rotated point</returns>
     public static Vector3 Rotate(this Vector3 v, Vector3 origin, float angle) => ((Vector2)v).Rotate(origin, angle);
 
-    public static Vector2[] ToPolygon(this Mesh mesh)
+    public static Vector2[] ToPolygon(this Mesh mesh) => (from v in mesh.vertices select new Vector2(v.x, v.y)).ToArray();
+    public static Vector2[] ToPolygonOld(this Mesh mesh)
     {
         Vector3[] verts = mesh.vertices;
         int[] tris = mesh.triangles;
