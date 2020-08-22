@@ -34,11 +34,8 @@ public class LightSource : MonoBehaviour
     void GeneratePolyCollider()
     {
         polycol.pathCount = 1;
-        // Vector3[] verts = mesh.vertices;
-        // List<Vector2> ret = new List<Vector2>()
         polycol.enabled = false;
-        Vector2[] a;
-        polycol.SetPath(0, a = mesh.ToPolygon());
+        polycol.SetPath(0, mesh.ToPolygon());
         polycol.enabled = true;
     }
 
