@@ -11,6 +11,7 @@ public class Weapon : MonoBehaviour
     public GameObject Player;
 
     private bool isFacingRight;
+    public LineRenderer line;
 
 
 
@@ -32,18 +33,33 @@ public class Weapon : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot();
+            StartCoroutine(Shoot());
         }
     }
 
-    void Shoot()
+    IEnumerator Shoot()
     {
         RaycastHit2D projectLaser = Physics2D.Raycast(laserPoint.position, laserPoint.right);
 
         if (projectLaser)
         {
             Instantiate(impact, projectLaser.point, Quaternion.identity);
+
+            line.SetPosition(0, laserPoint.position);
+            line.SetPosition(1, projectLaser.point);
         }
+        else
+        {
+            line.SetPosition(0, laserPoint.position);
+            line.SetPosition(1, laserPoint.position + laserPoint.right * 100);
+        }
+
+        line.enabled = true;
+
+        yield return new WaitForSeconds(0.02f);
+
+        line.enabled = false;
+       
     }
 
     void Flip()
