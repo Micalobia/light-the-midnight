@@ -69,18 +69,30 @@ public class PlayerController : MonoBehaviour
     //Causes character to move. 
     void Move(float move)
     {
+        Vector2 mousePosition = Input.mousePosition;
 
         Vector3 targetVelocity = new Vector2(move * 10f, playerRb.velocity.y);
         playerRb.velocity = Vector3.SmoothDamp(playerRb.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
-        if (move < 0 && !isFacingRight)
+        if (move < 0 && !isFacingRight || mousePosition.x < -90 && !isFacingRight && move == 0)
         {
-            Flip();
+            for (int count = 0; count < 1; count++)
+            {
+                Flip();
+                count++;
+            }
+            Debug.Log(mousePosition.x);
         }
   
-        else if (move > 0 && isFacingRight)
+        else if (move > 0 && isFacingRight || mousePosition.x > -90 && isFacingRight && move == 0)
         {
-            Flip();
+
+            for (int count = 0; count < 1; count++)
+            {
+                Flip();
+                count++;
+            }
+            Debug.Log(mousePosition.x);
         }
     }
 
