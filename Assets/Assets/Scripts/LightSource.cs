@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(MeshFilter))]
-public class CustomLightSource : MonoBehaviour
+public class LightSource : MonoBehaviour
 {
     [SerializeField] [Range(0f, 360f)] public float FOV = 90f;
     [SerializeField] public float ViewDistance = 3f;
