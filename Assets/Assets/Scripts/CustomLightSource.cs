@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(MeshFilter))]
 public class CustomLightSource : MonoBehaviour
 {
     [SerializeField] public float FOV = 90f;
@@ -11,10 +13,11 @@ public class CustomLightSource : MonoBehaviour
 
     private Vector3 origin = Vector3.zero;
     private int rayCount = 360;
-    private float startingAngle => Angle - FOV / 2f;
+    private float startingAngle => transform.eulerAngles.z + FOV / 2f;
 
     private Mesh mesh;
     public Mesh Mesh => mesh;
+    private PolygonCollider2D polycol;
 
     private static Vector3 GetVectorFromAngle(float angle)
     {
@@ -33,16 +36,24 @@ public class CustomLightSource : MonoBehaviour
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+        polycol = GetComponent<PolygonCollider2D>();
     }
 
     void Update()
     {
         SetOrigin(transform.position);
+        GenerateMesh();
+        GeneratePolyCollider();
     }
 
-    void LateUpdate()
+    void GeneratePolyCollider()
     {
-        GenerateMesh();
+        polycol.pathCount = 1;
+        // Vector3[] verts = mesh.vertices;
+        // List<Vector2> ret = new List<Vector2>()
+        polycol.enabled = false;
+        polycol.SetPath(0, mesh.ToPolygon());
+        polycol.enabled = true;
     }
 
     void SetOrigin(Vector3 origin) => this.origin = origin;
@@ -54,19 +65,18 @@ public class CustomLightSource : MonoBehaviour
         int[] triangles = new int[rayCount * 3];
 
         vertices[0] = Vector3.zero;
-        float angle = -startingAngle;
+        float angle = startingAngle;
         int vertexIndex = 1, triangleIndex = 0;
         float angleChange = FOV / rayCount;
-        int mask = LayerMask.GetMask("Level");
         for (int i = 0; i <= rayCount; i++)
         {
             Vector3 vecAng = GetVectorFromAngle(angle);
             Vector3 vertex;
-            RaycastHit2D rayHit = Physics2D.Raycast(origin, vecAng, ViewDistance, LayerMask); //Should only hit colliders with the Level tag, doesn't hit anything though
+            RaycastHit2D rayHit = Physics2D.Raycast(origin, vecAng, ViewDistance, LayerMask);
             vertex = (rayHit.collider == null) ? origin + vecAng * ViewDistance : (Vector3)rayHit.point; //Get where we hit if we hit, otherwise just put the point at our view distance
             //Debug.DrawRay(origin, vertex);
             //if (rayHit.collider != null) Debug.Log("Hit somethin'");
-            vertices[vertexIndex] = vertex - transform.position;
+            vertices[vertexIndex] = (vertex - transform.position).Rotate(-transform.eulerAngles.z);
             if (i != 0)
             {
                 triangles[triangleIndex] = 0;
