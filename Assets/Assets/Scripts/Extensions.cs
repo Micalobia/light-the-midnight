@@ -48,7 +48,43 @@ public static class VectorExtension
     /// <returns>The rotated point</returns>
     public static Vector3 Rotate(this Vector3 v, Vector3 origin, float angle) => ((Vector2)v).Rotate(origin, angle);
 
-    public static float Angle(this Vector2 v) => Mathf.Atan2(v.y, v.x);
+    /// <summary>
+    /// Returns the vector as an angle
+    /// </summary>
+    /// <param name="v">The vector to convert</param>
+    /// <returns>The angle in degrees</returns>
+    public static float Angle(this Vector2 v) => Mathf.Atan2(v.y, v.x)*Mathf.Rad2Deg;
+
+    /// <summary>
+    /// Returns the vector as an angle, discards z
+    /// </summary>
+    /// <param name="v">The vector to convert</param>
+    /// <returns>The angle in degrees</returns>
+    public static float Angle(this Vector3 v) => Mathf.Atan2(v.y, v.x)*Mathf.Rad2Deg;
+
+    /// <summary>
+    /// Returns the angle as a vector
+    /// </summary>
+    /// <param name="angle">The angle to convert</param>
+    /// <returns>The normalizes vector</returns>
+    public static Vector2 Angle(this float angle)
+    {
+        angle *= Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+    }
+
+    public static Vector2[] ToVector2(this Vector3[] v)
+    {
+        Vector2[] ret = new Vector2[v.Length];
+        for (int i = 0; i < v.Length; i++) ret[i] = new Vector2(v[i].x, v[i].y);
+        return ret;
+    }
+    public static Vector3[] ToVector3(this Vector2[] v)
+    {
+        Vector3[] ret = new Vector3[v.Length];
+        for (int i = 0; i < v.Length; i++) ret[i] = new Vector3(v[i].x, v[i].y);
+        return ret;
+    }
 
     /// <summary>
     /// Turns a mesh into a polygon by droping the z

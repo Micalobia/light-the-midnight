@@ -27,6 +27,21 @@ static class Utility
     //}
 }
 
+public struct RayInfo
+{
+    public Vector2 hit;
+    public float distance;
+    public bool reflected;
+    public Vector2 normal;
+    public RayInfo(Vector2 hit, float distance, bool reflected, Vector2 normal)
+    {
+        this.hit = hit;
+        this.distance = distance;
+        this.reflected = reflected;
+        this.normal = normal;
+    }
+}
+
 public struct Line
 {
     public Vector2 u;
