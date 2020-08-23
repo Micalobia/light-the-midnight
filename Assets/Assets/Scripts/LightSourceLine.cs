@@ -9,10 +9,10 @@ public class LightSourceLine : MonoBehaviour
 {
     [Header("Side 1")]
     [SerializeField] public Vector3 vector0;
-    [SerializeField] [Range(0, 360)] public float angle0;
+    [SerializeField] [Range(-180, 180)] public float angle0;
     [Header("Side 2")]
     [SerializeField] public Vector3 vector1;
-    [SerializeField] [Range(0, 360)] public float angle1;
+    [SerializeField] [Range(-180, 180)] public float angle1;
     [Header("Other")]
     [SerializeField] [Range(0, 540)] public int RayCount;
     [SerializeField] public float ViewDistance;
@@ -41,7 +41,7 @@ public class LightSourceLine : MonoBehaviour
         angle1 = 0f;
         RayCount = 180;
         ViewDistance = 4f;
-        Layers = 0;
+        Layers = LayerMask.GetMask("Opaque", "Reflective");
     }
 
     private void Start()
@@ -77,24 +77,47 @@ public class LightSourceLine : MonoBehaviour
         polygonCollider.SetPath(0, vertices);
         polygonCollider.enabled = true;
         mesh.vertices = vertices.ToVector3();
-        mesh.uv = new Vector2[vertices.Length];
+        mesh.uv = vertices;
         int[] triangles = new int[vertices.Length * 3];
-        for (int i = 1; i < width; i++)
+        bool c = clockwise(vertices[0], vertices[1], vertices[vertices.Length - 2]);
+        if (c)
         {
-            int main = i;
-            int premain = main - 1;
-            int cast = 2 * width - i - 1;
-            int precast = cast + 1;
-            int trindex = premain * 6;
-            triangles[trindex] = cast;
-            triangles[trindex + 1] = main;
-            triangles[trindex + 2] = premain;
-            triangles[trindex + 3] = premain;
-            triangles[trindex + 4] = precast;
-            triangles[trindex + 5] = cast;
+            for (int i = 1; i < width; i++)
+            {
+                int main = i;
+                int premain = main - 1;
+                int cast = 2 * width - i - 1;
+                int precast = cast + 1;
+                int trindex = premain * 6;
+                triangles[trindex] = premain;
+                triangles[trindex + 1] = main;
+                triangles[trindex + 2] = cast;
+                triangles[trindex + 3] = cast;
+                triangles[trindex + 4] = precast;
+                triangles[trindex + 5] = premain;
+            }
+        }
+        else
+        {
+            for (int i = 1; i < width; i++)
+            {
+                int main = i;
+                int premain = main - 1;
+                int cast = 2 * width - i - 1;
+                int precast = cast + 1;
+                int trindex = premain * 6;
+                triangles[trindex] = cast;
+                triangles[trindex + 1] = main;
+                triangles[trindex + 2] = premain;
+                triangles[trindex + 3] = premain;
+                triangles[trindex + 4] = precast;
+                triangles[trindex + 5] = cast;
+            }
         }
         mesh.triangles = triangles;
     }
+
+    private bool clockwise(Vector2 a, Vector2 b, Vector2 c) => (b.x - a.x) * (c.y * a.y) - (c.x - a.x) * (b.y - a.y) < 0;
 
     private Vector3 BaseLerp(float t) =>
         new Vector3(
