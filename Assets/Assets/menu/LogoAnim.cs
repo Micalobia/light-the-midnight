@@ -10,6 +10,9 @@ public class LogoAnim : MonoBehaviour
     private Image jamLogo;
 
     [SerializeField]
+    private Image FG;
+
+    [SerializeField]
     private Image Presents;
 
     [SerializeField]
@@ -34,6 +37,10 @@ public class LogoAnim : MonoBehaviour
     private void destroySprite()
     {
         Destroy(jamLogo);
+    }
+    private void destroyFG()
+    {
+        Destroy(FG);
     }
 
 }
