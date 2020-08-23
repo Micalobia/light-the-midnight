@@ -57,6 +57,11 @@ public class PlayerController : MonoBehaviour
             isOnGround = true;
            
         }
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+
+        }
     }
 
     #region Movement

@@ -13,6 +13,8 @@ public class Weapon : MonoBehaviour
     private bool isFacingRight;
     public LineRenderer line;
 
+    [SerializeField]
+    private float damage;
 
 
     // Update is called once per frame
@@ -43,6 +45,13 @@ public class Weapon : MonoBehaviour
 
         if (projectLaser)
         {
+            Roak roak = projectLaser.transform.GetComponent<Roak>();
+
+            if(roak != null)
+            {
+                roak.takeDamage(damage);
+            }
+
             Instantiate(impact, projectLaser.point, Quaternion.identity);
 
             line.SetPosition(0, laserPoint.position);
