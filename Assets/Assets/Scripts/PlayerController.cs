@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
                 count++;
             }
-            Debug.Log(mousePosition.x);
+            //Debug.Log(mousePosition.x);
         }
   
         else if (move > 0 && isFacingRight || mousePosition.x > -90 && isFacingRight && move == 0)
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
                 count++;
             }
-            Debug.Log(mousePosition.x);
+            //Debug.Log(mousePosition.x);
         }
     }
 
