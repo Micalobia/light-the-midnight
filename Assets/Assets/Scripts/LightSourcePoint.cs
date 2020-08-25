@@ -11,8 +11,9 @@ public class LightSourcePoint : MonoBehaviour
     [SerializeField] [Range(0f, 360f)] public float FOV;
     [SerializeField] public float ViewDistance;
     [SerializeField] [Range(0, 540)] public int RayCount;
-    [SerializeField] public LayerMask Layers;
-    [SerializeField] public GameObject Reflection;
+    [SerializeField] [Tooltip("Which layers the light can get blocked by")] public LayerMask Layers;
+    [SerializeField] [Tooltip("Which object to create when creating a reflection, should be the Reflection prefab")] public GameObject Reflection;
+    [SerializeField] [Tooltip("How many reflections are allowed")] [Range(1, 10)] public int Depth;
     private static int reflectionLayer;
     private List<GameObject> reflections;
     private List<GameObject> reflectionsOld;
@@ -22,10 +23,11 @@ public class LightSourcePoint : MonoBehaviour
 
     private void Reset()
     {
-        FOV = 90f;
-        ViewDistance = 3f;
-        RayCount = 135;
+        FOV = 60f;
+        ViewDistance = 4f;
+        RayCount = 90;
         Layers = LayerMask.GetMask("Opaque", "Reflective");
+        Depth = 4;
     }
 
     private void Start()
@@ -33,7 +35,6 @@ public class LightSourcePoint : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         polycol = GetComponent<PolygonCollider2D>();
-        reflectionLayer = LayerMask.NameToLayer("Reflective");
         reflections = new List<GameObject>();
         reflectionsOld = new List<GameObject>();
     }
@@ -48,6 +49,7 @@ public class LightSourcePoint : MonoBehaviour
 
     private void ConstructLight()
     {
+        reflectionLayer = LayerMask.NameToLayer("Reflective");
         int width = RayCount + 2;
         float count = RayCount + 1;
         float HalfFOV = FOV / 2;
@@ -85,6 +87,8 @@ public class LightSourcePoint : MonoBehaviour
             triangles[trindex + 2] = i - 1;
         }
         mesh.triangles = triangles;
+        mesh.RecalculateBounds();
+        if (Depth == 1) return;
         for (int i = 0; i < rayInfos.Count; i++)
             if (rayInfos[i].Count < 2)
                 rayInfos.RemoveAt(i--);
@@ -105,6 +109,7 @@ public class LightSourcePoint : MonoBehaviour
             source.Reflection = Reflection;
             source.Layers = Layers;
             source.transform.parent = transform;
+            source.Depth = Depth - 1;
             cur.SetActive(true);
             reflections.Add(cur);
         }

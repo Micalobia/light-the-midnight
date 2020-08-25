@@ -17,8 +17,9 @@ public class LightSourceLine : MonoBehaviour
     [SerializeField] public float ViewDistance1;
     [Header("Other")]
     [SerializeField] [Range(0, 540)] public int RayCount;
-    [SerializeField] public LayerMask Layers;
-    [SerializeField] public GameObject Reflection;
+    [SerializeField] [Tooltip("Which layers the light can get blocked by")] public LayerMask Layers;
+    [SerializeField] [Tooltip("Which object to create when creating a reflection, should be the Reflection prefab")] public GameObject Reflection;
+    [SerializeField] [Tooltip("How many reflections are allowed")] [Range(1, 10)] public int Depth;
     private Vector2 root => new Vector2(transform.position.x, transform.position.y);
     private static int reflectionLayer;
     private List<GameObject> reflections;
@@ -38,6 +39,7 @@ public class LightSourceLine : MonoBehaviour
         ViewDistance1 = 4f;
         Layers = LayerMask.GetMask("Opaque", "Reflective");
         Reflection = null;
+        Depth = 4;
     }
 
     private void Start()
@@ -52,7 +54,15 @@ public class LightSourceLine : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < reflectionsOld.Count; i++) Destroy(reflectionsOld[i]);
+        for (int i = 0; i < reflectionsOld.Count; i++)
+        {
+            foreach (Transform t in reflectionsOld[i].transform)
+            {
+                t.parent = transform;
+                reflections.Add(t.gameObject);
+            }
+            Destroy(reflectionsOld[i]);
+        }
         reflectionsOld = reflections.ToList();
         reflections = new List<GameObject>();
         ConstructLight();
@@ -130,6 +140,8 @@ public class LightSourceLine : MonoBehaviour
             }
         }
         mesh.triangles = triangles;
+        mesh.RecalculateBounds();
+        if (Depth == 1) return;
         for (int i = 0; i < rayInfos.Count; i++)
             if (rayInfos[i].Count < 2)
                 rayInfos.RemoveAt(i--);
@@ -150,6 +162,7 @@ public class LightSourceLine : MonoBehaviour
             source.Reflection = Reflection;
             source.Layers = Layers;
             source.transform.parent = transform;
+            source.Depth = Depth - 1;
             cur.SetActive(true);
             reflections.Add(cur);
         }
@@ -170,7 +183,7 @@ public class LightSourceLine : MonoBehaviour
         Vector2 angleVector = angle.Angle();
         float viewDistance = Mathf.LerpUnclamped(ViewDistance0, ViewDistance1, t);
         Vector2 transVector = transform.TransformDirection(angleVector);
-        RaycastHit2D rayHit = Physics2D.Raycast(transform.TransformPoint(origin) + (Vector3)(transVector * 0.5f), transVector, viewDistance - 0.5f, Layers);
+        RaycastHit2D rayHit = Physics2D.Raycast(transform.TransformPoint(origin), transVector, viewDistance, Layers);
         if (rayHit)
         {
             bool reflected = rayHit.collider.gameObject.layer == reflectionLayer;
