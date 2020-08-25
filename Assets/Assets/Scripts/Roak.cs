@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Roak : MonoBehaviour, IEnemy
 {
+    #region Variables
     public virtual float health => Health;
 
     [SerializeField]
@@ -33,12 +34,30 @@ public class Roak : MonoBehaviour, IEnemy
     [SerializeField]
     private bool isFacingLeft;
 
+    [SerializeField]
+    private float attackDistance;
+
+    [SerializeField]
+    public GameObject damageField;
+
+    [SerializeField]
+    private bool hasSpawned;
+
+    [SerializeField]
+    private Vector3 startPosition;
+
+    [SerializeField]
+    private float Scale;
+
+    #endregion
+
 
     void Awake()
     {
         roakAnim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         roakRb = GetComponent<Rigidbody2D>();
+        hasSpawned = false;
     }
 
     // Update is called once per frame
@@ -49,54 +68,59 @@ public class Roak : MonoBehaviour, IEnemy
        
     }
 
+   
 
-
+    #region Movement
     public void CheckDistance()
     {
-        if(Vector2.Distance(transform.position, player.transform.position) < agroDistance)
+        if (hasSpawned == true)
         {
-            
-            roakAnim.SetBool("isWalkingNearPlayer", true);
-            
-            if(player.transform.position.y <= 10)
+            if (Vector2.Distance(transform.position, player.transform.position) < agroDistance)
             {
 
-                if ((player.transform.position.x + transform.position.x) > 0)
+                roakAnim.SetBool("isWalkingNearPlayer", true);
+
+                if (player.transform.position.y <= 10)
                 {
-                    transform.localScale = new Vector3(-.5f, .5f);
+
+                    if ((player.transform.position.x + transform.position.x) > 0)
+                    {
+                        transform.localScale = new Vector3(-.5f, .5f);
+                        Attack();
+                    }
+                    if ((player.transform.position.x - transform.position.x) < 0)
+                    {
+                        transform.localScale = new Vector2(.5f, .5f);
+                        Attack();
+
+                    }
+
+                    transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+
                 }
-                if ((player.transform.position.x - transform.position.x) < 0)
+
+            }
+            else
+            {
+                roakAnim.SetBool("isWalkingNearPlayer", false);
+                roakAnim.SetBool("isWalking", true);
+
+
+                if (isFacingLeft)
                 {
-                    transform.localScale = new Vector2(.5f, .5f);
-
+                    transform.Translate(-speed * Time.deltaTime, 0f, 0f);
+                    transform.localScale = new Vector2(Scale, Scale);
                 }
-
-                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-               
+                else if (!isFacingLeft)
+                {
+                    transform.Translate(speed * Time.deltaTime, 0f, 0f);
+                    transform.localScale = new Vector2(-Scale, Scale);
+                }
             }
-           
-        }
-        else
-        {
-            roakAnim.SetBool("isWalkingNearPlayer", false);
-            roakAnim.SetBool("isWalking", true);
-
-
-            if (isFacingLeft)
-            {
-                transform.Translate(-speed * Time.deltaTime, 0f, 0f);
-                transform.localScale = new Vector2(.5f, .5f);
-            }
-            else if(!isFacingLeft)
-            {
-                transform.Translate(speed * Time.deltaTime, 0f, 0f);
-                transform.localScale = new Vector2(-.5f, .5f);
-            }
-
-
 
         }
     }
+    #endregion
 
     public virtual void takeDamage(float damage)
     {
@@ -138,5 +162,28 @@ public class Roak : MonoBehaviour, IEnemy
     public void Death()
     {
         Destroy(this.gameObject);
+    }
+
+    public void Attack()
+    {
+        if(Vector2.Distance(transform.position, player.transform.position) < attackDistance)
+        {
+            roakAnim.SetTrigger("Attack");
+        }
+    }
+
+    public void spawn()
+    {
+        roakAnim.SetTrigger("hasSpawned");
+        hasSpawned = true;
+     
+    }
+
+    public void enableHitbox()
+    {
+        if(damageField.activeInHierarchy == false)
+        {
+            damageField.SetActive(true);
+        }
     }
 }

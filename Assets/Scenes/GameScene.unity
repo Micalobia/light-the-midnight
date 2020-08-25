@@ -5015,7 +5015,7 @@ SpriteRenderer:
   m_Size: {x: 9.68, y: 4.61}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &629629295
@@ -5135,7 +5135,7 @@ SpriteRenderer:
   m_Size: {x: 5.88, y: 11.78}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &629629299
@@ -5172,6 +5172,8 @@ MonoBehaviour:
   isOnGround: 0
   health: 0
   arm: {fileID: 1765655365}
+  playerAnim: {fileID: 0}
+  jumpHeight: 0
   m_MovementSmoothing: 0.05
 --- !u!114 &629629301
 MonoBehaviour:
@@ -5275,7 +5277,7 @@ SpriteRenderer:
   m_Size: {x: 110.200424, y: 35.46}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &787852064
@@ -5637,8 +5639,65 @@ Transform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1626880578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1626880579}
+  - component: {fileID: 1626880580}
+  m_Layer: 0
+  m_Name: HurtBoxRoak
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1626880579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626880578}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.84, y: 0.44, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2042322021}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1626880580
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626880578}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.9745555, y: -0.25919056}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.949111, y: 1.5183811}
+  m_EdgeRadius: 0
 --- !u!1 &1664918729
 GameObject:
   m_ObjectHideFlags: 0
@@ -5746,7 +5805,7 @@ Transform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1765655365
 GameObject:
@@ -6044,7 +6103,6 @@ GameObject:
   - component: {fileID: 2042322021}
   - component: {fileID: 2042322020}
   - component: {fileID: 2042322017}
-  - component: {fileID: 2042322018}
   - component: {fileID: 2042322019}
   - component: {fileID: 2042322016}
   - component: {fileID: 2042322022}
@@ -6076,6 +6134,11 @@ MonoBehaviour:
   player: {fileID: 629629299}
   agroDistance: 25
   isFacingLeft: 0
+  attackDistance: 4
+  damageField: {fileID: 1626880578}
+  hasSpawned: 0
+  startPosition: {x: 0, y: 0, z: 0}
+  Scale: 0.5
 --- !u!95 &2042322017
 Animator:
   serializedVersion: 3
@@ -6095,29 +6158,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!68 &2042322018
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2042322015}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -1.643528, y: -4.2915163}
-  - {x: 0.082491875, y: -4.2440968}
-  - {x: 1.4775572, y: -4.244096}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!61 &2042322019
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6203,11 +6243,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042322015}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.32, y: -2.08, z: 0}
+  m_LocalPosition: {x: 6.96, y: -2.015441, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 1626880579}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &2042322022
 CapsuleCollider2D:
@@ -6222,8 +6263,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.13772964, y: -0.24991417}
-  m_Size: {x: 3, y: 8.166489}
+  m_Offset: {x: 0.14, y: -0.24991417}
+  m_Size: {x: 3, y: 8}
   m_Direction: 0
 --- !u!50 &2042322023
 Rigidbody2D:
@@ -6244,5 +6285,5 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
