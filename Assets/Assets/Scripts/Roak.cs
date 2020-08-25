@@ -7,45 +7,31 @@ public class Roak : MonoBehaviour, IEnemy
 {
     #region Variables
     public virtual float health => Health;
-
     [SerializeField]
     private float spriteOffset;
-
     [SerializeField]
     protected float Health = 100;
-
     [SerializeField]
     private Animator roakAnim;
-
     [SerializeField]
     private BoxCollider2D roakHitBox;
-
     [SerializeField]
     private float speed;
-
     [SerializeField]
     private Transform player;
-
     [SerializeField]
     private float agroDistance;
-
     private Rigidbody2D roakRb;
-
     [SerializeField]
     private bool isFacingLeft;
-
     [SerializeField]
     private float attackDistance;
-
     [SerializeField]
     public GameObject damageField;
-
     [SerializeField]
     private bool hasSpawned;
-
     [SerializeField]
     private Vector3 startPosition;
-
     [SerializeField]
     private float Scale;
 
@@ -95,7 +81,7 @@ public class Roak : MonoBehaviour, IEnemy
 
                     }
 
-                    transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector2 (player.transform.position.x, transform.position.y), speed * Time.deltaTime);
 
                 }
 
@@ -184,6 +170,10 @@ public class Roak : MonoBehaviour, IEnemy
         if(damageField.activeInHierarchy == false)
         {
             damageField.SetActive(true);
+        }
+        else if(damageField.activeInHierarchy == true)
+        {
+            damageField.SetActive(false);
         }
     }
 }

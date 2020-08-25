@@ -20,15 +20,20 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnim;
     [SerializeField]
     private float jumpHeight;
-
+    [SerializeField]
+    private float damage;
+    [SerializeField]
+    private float knockBack;
     //Variable to help detemine when the sprite flips. 
     private float horizontalMove = 0f;
+
 
     
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f; 
     private Vector3 m_Velocity = Vector3.zero;
 
-    bool isFacingRight;
+    [SerializeField]
+    private bool isFacingRight;
     void Awake()
     {
         playerRb = GetComponent<Rigidbody2D>();
@@ -49,8 +54,6 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetBool("hasJumped",true);
         }
 
-       
-
     }
 
     void FixedUpdate()
@@ -68,7 +71,19 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Enemy"))
         {
-            
+            health -= damage;
+
+            if (isFacingRight)
+            {
+                playerRb.AddForce(-Vector2.right * knockBack, ForceMode2D.Impulse);
+            }
+
+            if (!isFacingRight)
+            {
+                playerRb.AddForce(Vector2.right * knockBack, ForceMode2D.Impulse);
+            }
+          
+            CheckHealth();
         }
     }
 
@@ -109,11 +124,11 @@ public class PlayerController : MonoBehaviour
         }
 
         //This is what triggers the animations for the player.
-        if(move != 0)
+        if(move != 0 && health > 0)
         {
             playerAnim.SetBool("isRunning", true);
         }
-        else
+        else if(move == 0 && health > 0)
         {
             playerAnim.SetBool("isRunning", false);
         }
@@ -145,6 +160,19 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
+    void CheckHealth()
+    {
+        if(health > 0)
+        {
+            playerAnim.SetTrigger("tookDamage");
+        }
+
+        if(health <= 0)
+        {
+            playerAnim.SetBool("isDead",true);
+            
+        }
+    }
 
     void isFalling()
     {

@@ -5029,10 +5029,10 @@ GameObject:
   - component: {fileID: 629629299}
   - component: {fileID: 629629298}
   - component: {fileID: 629629297}
-  - component: {fileID: 629629296}
   - component: {fileID: 629629300}
   - component: {fileID: 629629301}
   - component: {fileID: 629629302}
+  - component: {fileID: 629629296}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -5170,10 +5170,12 @@ MonoBehaviour:
   jumpForce: 10
   playerRb: {fileID: 0}
   isOnGround: 0
-  health: 0
+  health: 3
   arm: {fileID: 1765655365}
   playerAnim: {fileID: 0}
   jumpHeight: 0
+  damage: 1
+  knockBack: 20
   m_MovementSmoothing: 0.05
 --- !u!114 &629629301
 MonoBehaviour:
@@ -5653,7 +5655,7 @@ GameObject:
   - component: {fileID: 1626880580}
   m_Layer: 0
   m_Name: HurtBoxRoak
-  m_TagString: Untagged
+  m_TagString: HurtBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5682,7 +5684,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.9745555, y: -0.25919056}
@@ -5715,7 +5717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1664918730
 BoxCollider2D:
   m_ObjectHideFlags: 0
