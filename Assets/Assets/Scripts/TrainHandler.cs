@@ -58,11 +58,9 @@ public class TrainHandler : MonoBehaviour
             timeSinceTrainSpawned -= TrainSpawnTime;
             train = Instantiate(Train);
             train.transform.SetParent(transform);
-            train.transform.localScale = Vector3.one;
-            float yscale = train.transform.lossyScale.y;
             train.transform.position = Platforms[0].transform.position;
             Vector3 vec = train.transform.position;
-            vec.y += Height * yscale;
+            vec.y += Height;
             train.transform.position = vec + transform.position;
         }
         if (train != null)
