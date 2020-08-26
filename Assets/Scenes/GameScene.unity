@@ -5006,8 +5006,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ff1efae29ac75a242891174a306c7671, type: 3}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 3ae3c26e45bc27f48a5e57e3600e4bbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5018,6 +5018,133 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &542678021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 542678023}
+  - component: {fileID: 542678022}
+  m_Layer: 0
+  m_Name: BG Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &542678022
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542678021}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 243752053592687308, guid: ca5e00ddd1f76a042ae3ae5afb2a0527, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 4c199f2f382b8a54ea2dace3e6ab7e85, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &542678023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542678021}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &629629295
 GameObject:
   m_ObjectHideFlags: 0
@@ -5127,7 +5254,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 69bf4a3c78e965249bb0b0ae3ea82d03, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e178c06ff27244444b3d6805bc7946f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5163,7 +5290,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 629629295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb41b56e1a29864488c93b8d4cc538b, type: 3}
+  m_Script: {fileID: 11500000, guid: ebc94f00bd5613b46820a5ef811ed451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 50
@@ -5186,7 +5313,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 629629295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2e80150957a8c04788f9863417c0c7a, type: 3}
+  m_Script: {fileID: 11500000, guid: d6fa0a37b1c6ad44395355474d3269e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserPoint: {fileID: 1229009546}
@@ -5271,7 +5398,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 069ec0d985d26d4459f5e2bdf7330bf6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0d96d6e322c264241a4870761174fb20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5294,7 +5421,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &868356256
 GameObject:
@@ -5308,6 +5435,7 @@ GameObject:
   - component: {fileID: 868356258}
   - component: {fileID: 868356257}
   - component: {fileID: 868356260}
+  - component: {fileID: 868356261}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5390,11 +5518,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 868356256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c066a1a906dc5b346b38968d92f2218b, type: 3}
+  m_Script: {fileID: 11500000, guid: 302e27f379918164d976d8a41612b353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 629629299}
-  offset: {x: 0, y: 3, z: -2.11}
+  offset: {x: 0, y: 0, z: -10}
+--- !u!114 &868356261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868356256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8b48a1929bd42fc8a74e9281c1f25e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CamTransform: {fileID: 868356259}
+  CameraSpeedMultiplier: 1
+  Color: {r: 0.4517622, g: 0.51420856, b: 0.6792453, a: 0.16862746}
+  Size: 1
+  HorizontalSpeed: 0.16
+  VerticalSpeed: 0
+  Density: 0.51
+  Shader: {fileID: 4800000, guid: 00e888b8dfe2842c1a10e04b2d083b64, type: 3}
 --- !u!1 &1160774166
 GameObject:
   m_ObjectHideFlags: 0
@@ -5406,7 +5554,7 @@ GameObject:
   - component: {fileID: 1160774169}
   - component: {fileID: 1160774168}
   - component: {fileID: 1160774167}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Platform
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -5983,7 +6131,7 @@ GameObject:
   - component: {fileID: 1884632116}
   - component: {fileID: 1884632118}
   m_Layer: 2
-  m_Name: CustomLight
+  m_Name: LightSourcePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5998,9 +6146,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1884632113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d661799e9bf4a7419abd2a8552fc474, type: 3}
+  m_Script: {fileID: 11500000, guid: 62003535b2f77294bac25051fabb19a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FOV: 60
+  ViewDistance: 4
+  RayCount: 90
+  Layers:
+    serializedVersion: 2
+    m_Bits: 768
+  Reflection: {fileID: 3600170181974361477, guid: 6040d8b2f668749478d7302bc57fea81, type: 3}
+  Depth: 4
 --- !u!4 &1884632115
 Transform:
   m_ObjectHideFlags: 0
@@ -6008,13 +6164,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1884632113}
-  m_LocalRotation: {x: -0, y: -0, z: -0.68632644, w: 0.72729367}
-  m_LocalPosition: {x: 0.35, y: 1.04, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.98292506, w: 0.18400663}
+  m_LocalPosition: {x: 7.13, y: 2.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -86.68}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -158.794}
 --- !u!23 &1884632116
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6025,7 +6181,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

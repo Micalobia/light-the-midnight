@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
                 count++;
             }
-            Debug.Log(move);
+            //Debug.Log(mousePosition.x);
         }
   
         if (move > 0 && isFacingRight || mousePosition.x > -90 && isFacingRight && move == 0)
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
                 count++;
             }
-            Debug.Log(move);
+            //Debug.Log(mousePosition.x);
         }
 
         //This is what triggers the animations for the player.
