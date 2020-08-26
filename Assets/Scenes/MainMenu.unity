@@ -165,7 +165,7 @@ Animator:
   m_GameObject: {fileID: 147887450}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 513646db863efdd4bb37573e33d2c5a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: f9eaeca8503285c42b8772ddcbdd4e8b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -214,7 +214,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 77fa2a4f5eed68f45b0da73433b8299f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 97f64c6ed91d919498ea12e444ef39df, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -352,7 +352,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 60f961205f7027846867ed0606a02927, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 988648c3d96b8a046bb5bccaa37377a3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -578,7 +578,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 02912d2d3e84e0a4cbe7bdfa200ffd28, type: 3}
+    m_Font: {fileID: 12800000, guid: b14ca182f77e8e7458bbcfe15d28a488, type: 3}
     m_FontSize: 136
     m_FontStyle: 0
     m_BestFit: 0
@@ -640,7 +640,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 60f961205f7027846867ed0606a02927, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 988648c3d96b8a046bb5bccaa37377a3, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -783,7 +783,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f3e6f917ed3c2524bb7738006c8000e6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bccd08eab315ce04f839d379b0ca0b79, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -860,7 +860,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 02912d2d3e84e0a4cbe7bdfa200ffd28, type: 3}
+    m_Font: {fileID: 12800000, guid: b14ca182f77e8e7458bbcfe15d28a488, type: 3}
     m_FontSize: 139
     m_FontStyle: 0
     m_BestFit: 0
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3fcac10f30056c34dbf5796acf2e45d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3ae3c26e45bc27f48a5e57e3600e4bbd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1080,7 +1080,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c44054e00669a264880a52fe68aff76e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 34f92afcca26fd2469de37ca930572b2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1393,7 +1393,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 02912d2d3e84e0a4cbe7bdfa200ffd28, type: 3}
+    m_Font: {fileID: 12800000, guid: b14ca182f77e8e7458bbcfe15d28a488, type: 3}
     m_FontSize: 139
     m_FontStyle: 0
     m_BestFit: 0
@@ -1471,7 +1471,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7e0ce6e23180bdf4595e1f1806759886, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bb26c9e6515d8742bf9dfb159056072, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1615,7 +1615,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 02912d2d3e84e0a4cbe7bdfa200ffd28, type: 3}
+    m_Font: {fileID: 12800000, guid: b14ca182f77e8e7458bbcfe15d28a488, type: 3}
     m_FontSize: 136
     m_FontStyle: 0
     m_BestFit: 0
@@ -1845,7 +1845,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0fcdf0947c98ec94a9eeed5cedcb2dd1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e8dd91a4ff80a034b96f4ff166814bf7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1989,7 +1989,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 02912d2d3e84e0a4cbe7bdfa200ffd28, type: 3}
+    m_Font: {fileID: 12800000, guid: b14ca182f77e8e7458bbcfe15d28a488, type: 3}
     m_FontSize: 139
     m_FontStyle: 0
     m_BestFit: 0
@@ -2164,7 +2164,7 @@ Animator:
   m_GameObject: {fileID: 1359091367}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f6fb4838928b2154f93825266555a5c1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5d7c01fcec4d1ab4698b3bbbe2e99a2b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2193,7 +2193,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7e0ce6e23180bdf4595e1f1806759886, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bb26c9e6515d8742bf9dfb159056072, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2220,7 +2220,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1359091367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb942a793b98d394d8fd588c9b096034, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cdbc0e9853ec9f4eaadb3285e6e38ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   jamLogo: {fileID: 1603858524}
@@ -2354,7 +2354,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1534118380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8b45f00885d6a44fbf028a04e938434, type: 3}
+  m_Script: {fileID: 11500000, guid: 964d65d63fa49024c8d035f9c8f979ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1534118382
@@ -2421,7 +2421,7 @@ Animator:
   m_GameObject: {fileID: 1603858520}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9d41ccb40de40154e8c3083ef72edfe2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 17e65acaca776fa4198a8193015cb656, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2439,7 +2439,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1603858520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb942a793b98d394d8fd588c9b096034, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cdbc0e9853ec9f4eaadb3285e6e38ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   jamLogo: {fileID: 1603858524}
@@ -2467,7 +2467,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7e8f50d4568a9d241ae81eaeb060e45c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e450d52ae8d27c468c712c4bf15adb2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2512,7 +2512,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6e94e948880d1954aa5634d108ac03b2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f90abd60e2accdf45af71e6625d94824, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2669,7 +2669,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 89cd7723e17013045ac594e0bafa4fea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4ce6511f9f810334e9d7d3a83cdebe68, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2823,7 +2823,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7e0ce6e23180bdf4595e1f1806759886, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bb26c9e6515d8742bf9dfb159056072, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2889,7 +2889,7 @@ Animator:
   m_GameObject: {fileID: 1903506634}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 794aeb61589e3f4488f6c69b8c938a4f, type: 2}
+  m_Controller: {fileID: 9100000, guid: bebb4dfa81a378c45b4e2fb18270fc76, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2918,7 +2918,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 650aba30560ebf24d81aec505d2526bf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc1aa0bc43fd8b44f8ceaa7800a558c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3062,7 +3062,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 02912d2d3e84e0a4cbe7bdfa200ffd28, type: 3}
+    m_Font: {fileID: 12800000, guid: b14ca182f77e8e7458bbcfe15d28a488, type: 3}
     m_FontSize: 139
     m_FontStyle: 0
     m_BestFit: 0
@@ -3177,7 +3177,7 @@ Animator:
   m_GameObject: {fileID: 2095658395}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 78b04d245e8f75145a237e7b416818a4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9fdd7058bca25cc4ca0613dcd3afa310, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3226,12 +3226,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: d343de6e4c467dc4488e9b761af2e7cd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: df89ab866cb22c546884814dd6534656, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.94, y: 10.71}
+  m_Size: {x: 4.32, y: 11.52}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
