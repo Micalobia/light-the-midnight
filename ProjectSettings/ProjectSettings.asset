@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: The Midnight Team
   productName: Light the Midnight
-  defaultCursor: {fileID: 2800000, guid: 0f7fe7fd48f673546ba75708dae19afe, type: 3}
+  defaultCursor: {fileID: 2800000, guid: b052cc7dffdc6724c9b26ae494a6cc24, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 0
@@ -270,7 +270,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: f647299eed35d934ea4435e178bb61c6, type: 3}
+      m_Icon: {fileID: 2800000, guid: 4d98d49f5b505f244acfb64ccf49d659, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
