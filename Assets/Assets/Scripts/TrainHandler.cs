@@ -39,11 +39,9 @@ public class TrainHandler : MonoBehaviour
         for (int i = 0; i < PlatformCount; i++)
         {
             Platforms[i] = Instantiate(TrainPlatform);
-            Platforms[i].transform.parent = transform;
-            Platforms[i].transform.localScale = Vector3.one;
-            float xscale = Platforms[i].transform.lossyScale.x;
+            Platforms[i].transform.SetParent(transform);
             float t = (float)i / PlatformCount;
-            Platforms[i].transform.position = new Vector3(Mathf.LerpUnclamped(xscale * d, -d * xscale, t), Platforms[i].transform.position.y) + transform.position;
+            Platforms[i].transform.position = new Vector3(Mathf.LerpUnclamped(d, -d, t), Platforms[i].transform.position.y);
         }
         timeSinceTrainSpawned = 0f;
     }
@@ -59,7 +57,7 @@ public class TrainHandler : MonoBehaviour
         {
             timeSinceTrainSpawned -= TrainSpawnTime;
             train = Instantiate(Train);
-            train.transform.parent = transform;
+            train.transform.SetParent(transform);
             train.transform.localScale = Vector3.one;
             float yscale = train.transform.lossyScale.y;
             train.transform.position = Platforms[0].transform.position;
