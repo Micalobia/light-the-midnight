@@ -18,6 +18,10 @@ public class ButtonController : MonoBehaviour
         SceneManager.LoadScene("Cutscene");
     }
 
+    public void startLevel()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
     public void returnToMenu()
     {
         SceneManager.LoadScene("MainMenu");
