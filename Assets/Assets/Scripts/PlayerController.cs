@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] public float FlipDeadzone;
     [SerializeField]
     private float moveSpeed = 5f;
     [SerializeField]
@@ -28,12 +31,11 @@ public class PlayerController : MonoBehaviour
     private float horizontalMove = 0f;
 
 
-    
-    [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f; 
+
+    [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;
     private Vector3 m_Velocity = Vector3.zero;
 
-    [SerializeField]
-    private bool isFacingRight;
+    private bool isFacingLeft;
     void Awake()
     {
         playerRb = GetComponent<Rigidbody2D>();
@@ -51,38 +53,35 @@ public class PlayerController : MonoBehaviour
         {
             playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
-            playerAnim.SetBool("hasJumped",true);
+            playerAnim.SetBool("hasJumped", true);
         }
 
     }
 
-    void FixedUpdate()
-    {
-        Move(horizontalMove * Time.fixedDeltaTime);
-    }
+    void FixedUpdate() => Move(horizontalMove * Time.fixedDeltaTime);
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
-           
+
         }
 
         if (other.gameObject.CompareTag("Enemy"))
         {
             health -= damage;
 
-            if (isFacingRight)
+            if (isFacingLeft)
             {
                 playerRb.AddForce(-Vector2.right * knockBack, ForceMode2D.Impulse);
             }
 
-            if (!isFacingRight)
+            if (!isFacingLeft)
             {
                 playerRb.AddForce(Vector2.right * knockBack, ForceMode2D.Impulse);
             }
-          
+
             CheckHealth();
         }
     }
@@ -102,38 +101,27 @@ public class PlayerController : MonoBehaviour
         Vector3 targetVelocity = new Vector2(move * 10f, playerRb.velocity.y);
         playerRb.velocity = Vector3.SmoothDamp(playerRb.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
-        if (move < 0 && !isFacingRight || mousePosition.x < -90 && !isFacingRight && move == 0)
-        {
+        if (playerRb.velocity.x + FlipDeadzone < 0 && !isFacingLeft) Flip();
+        if (playerRb.velocity.x - FlipDeadzone > 0 && isFacingLeft) Flip();
 
-            for (int count = 0; count < 1; count++)
-            {
-                Flip();
-                count++;
-            }
-            //Debug.Log(mousePosition.x);
-        }
-  
-        if (move > 0 && isFacingRight || mousePosition.x > -90 && isFacingRight && move == 0)
-        {
-            for (int count = 0; count < 1; count++)
-            {
-                Flip();
-                count++;
-            }
-            //Debug.Log(mousePosition.x);
-        }
+        //if ((move * Time.deltaTime < 0 && !isFacingLeft) || (mousePosition.x < -90 && !isFacingLeft && move == 0)) Flip();
+
+        //if ((move * Time.deltaTime > 0 && isFacingLeft) || (mousePosition.x > -90 && isFacingLeft && move == 0))
+        //{
+        //    Flip();
+        //}
 
         //This is what triggers the animations for the player.
-        if(move != 0 && health > 0)
+        if (move != 0 && health > 0)
         {
             playerAnim.SetBool("isRunning", true);
         }
-        else if(move == 0 && health > 0)
+        else if (move == 0 && health > 0)
         {
             playerAnim.SetBool("isRunning", false);
         }
 
-       
+
     }
 
     //Method to make the arm look at the mouse. 
@@ -155,28 +143,28 @@ public class PlayerController : MonoBehaviour
     //Method that flips the game object when it is moving 
     void Flip()
     {
-        isFacingRight = !isFacingRight;
+        isFacingLeft = !isFacingLeft;
 
         transform.Rotate(0f, 180f, 0f);
     }
 
     void CheckHealth()
     {
-        if(health > 0)
+        if (health > 0)
         {
             playerAnim.SetTrigger("tookDamage");
         }
 
-        if(health <= 0)
+        if (health <= 0)
         {
-            playerAnim.SetBool("isDead",true);
-            
+            playerAnim.SetBool("isDead", true);
+
         }
     }
 
     void isFalling()
     {
-        if(isOnGround == true)
+        if (isOnGround == true)
         {
             playerAnim.SetBool("hasJumped", false);
             playerAnim.SetBool("isFalling", false);
