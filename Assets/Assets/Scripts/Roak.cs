@@ -34,6 +34,19 @@ public class Roak : MonoBehaviour, IEnemy
     private Vector3 startPosition;
     [SerializeField]
     private float Scale;
+    [SerializeField]
+    private float Timer;
+
+    //Sound Files for Roak Damage
+    [SerializeField]
+    private AudioSource roakAudioSource;
+
+    [SerializeField]
+    private AudioClip agroAudio;
+    [SerializeField]
+    private AudioClip deathAudio;
+
+    private bool soundPlayed;
 
     #endregion
 
@@ -43,6 +56,7 @@ public class Roak : MonoBehaviour, IEnemy
         roakAnim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         roakRb = GetComponent<Rigidbody2D>();
+        roakAudioSource = GetComponent<AudioSource>();
         hasSpawned = false;
     }
 
@@ -61,8 +75,15 @@ public class Roak : MonoBehaviour, IEnemy
     {
         if (hasSpawned == true)
         {
+            
+
             if (Vector2.Distance(transform.position, player.transform.position) < agroDistance)
             {
+                if (!soundPlayed)
+                {
+                    roakAudioSource.PlayOneShot(agroAudio);
+                    soundPlayed = true;
+                }
 
                 roakAnim.SetBool("isWalkingNearPlayer", true);
 
@@ -92,15 +113,29 @@ public class Roak : MonoBehaviour, IEnemy
                 roakAnim.SetBool("isWalking", true);
 
 
-                if (isFacingLeft)
+                if (isFacingLeft && Timer < 5)
                 {
                     transform.Translate(-speed * Time.deltaTime, 0f, 0f);
                     transform.localScale = new Vector2(Scale, Scale);
+                    Timer += Time.deltaTime;
+
+                    if(Timer > 5)
+                    {
+                        isFacingLeft = false;
+                        Timer = 0;
+                    }
                 }
-                else if (!isFacingLeft)
+                else if (!isFacingLeft && Timer < 5)
                 {
                     transform.Translate(speed * Time.deltaTime, 0f, 0f);
                     transform.localScale = new Vector2(-Scale, Scale);
+                    Timer += Time.deltaTime;
+
+                    if(Timer > 5)
+                    {
+                        isFacingLeft = true;
+                        Timer = 0;
+                    }
                 }
             }
 
@@ -114,8 +149,14 @@ public class Roak : MonoBehaviour, IEnemy
 
         if(health <= 0)
         {
+            roakAudioSource.PlayOneShot(deathAudio);
+
+
+
             roakAnim.SetBool("isDead", true);
-            if(roakAnim.GetBool("isWalkingNearPlayer") != true)
+
+
+            if (roakAnim.GetBool("isWalkingNearPlayer") != true)
             {
                 transform.position = new Vector2(transform.position.x, transform.position.y);
 
@@ -135,12 +176,13 @@ public class Roak : MonoBehaviour, IEnemy
         {
            
           isFacingLeft = false;
-          Debug.Log("Accessed Is Facing Left");
+            Timer = 0;
           
         }
         else if (objEnv.gameObject.CompareTag("Obstacle") && isFacingLeft == false)
         {
             isFacingLeft = true;
+            Timer = 0;
         }
        
     }
