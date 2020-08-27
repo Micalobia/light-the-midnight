@@ -4960,7 +4960,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202965770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7300007, y: 0.23999983, z: -1}
+  m_LocalPosition: {x: 0, y: 0.12, z: -1}
   m_LocalScale: {x: 0.53776693, y: 0.5265421, z: 1}
   m_Children:
   - {fileID: 1229009546}
@@ -5362,7 +5362,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.15173268, y: -0.11035323}
+  m_Offset: {x: -0.15173268, y: 0.042111397}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5373,7 +5373,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.436107, y: 10.864056}
+  m_Size: {x: 4.436107, y: 10.559126}
   m_EdgeRadius: 0
 --- !u!212 &629629298
 SpriteRenderer:
@@ -5454,7 +5454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc94f00bd5613b46820a5ef811ed451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 50
+  MoveSpeed: 35
   JumpForce: 10
   MovementSmoothing: 0.05
   Health: 3
@@ -5534,7 +5534,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.1246524
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -5656,8 +5656,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Scales:
-  - {x: 0, y: 0.1}
-  - {x: 0.05, y: 0.1}
+  - {x: -0.95, y: -0.05}
+  - {x: -0.5, y: 0}
 --- !u!1 &868356256
 GameObject:
   m_ObjectHideFlags: 0
@@ -5759,7 +5759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 629629299}
-  offset: {x: 0, y: 2.51, z: -10}
+  offset: {x: 0, y: 2, z: -10}
 --- !u!114 &868356261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5932,8 +5932,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1109744802}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.5788, y: 7.38, z: 1}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalPosition: {x: -5.5788, y: 8.97, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1864582002}
   m_RootOrder: 0
@@ -5982,8 +5982,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 110.200424, y: 35.46}
+  m_DrawMode: 2
+  m_Size: {x: 377.5, y: 35.46}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6022,16 +6022,16 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 19.2, y: 1.47}
+    newSize: {x: 159.65, y: 1.42}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 2
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 159.65, y: 1.42}
   m_EdgeRadius: 0
 --- !u!212 &1160774168
 SpriteRenderer:
@@ -6072,13 +6072,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: a44f19ace62bbd54284b5a83f9ef6441, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_DrawMode: 2
+  m_Size: {x: 159.65, y: 1.42}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6093,7 +6093,7 @@ Transform:
   m_GameObject: {fileID: 1160774166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -4.61, z: 0}
-  m_LocalScale: {x: 1000, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -6289,7 +6289,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d065dc0f714c3e3439d2447afe86ba44, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 70b27bcf947fd4644900ee1153684843, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6297,7 +6297,7 @@ SpriteRenderer:
   m_Size: {x: 10.59, y: 8.13}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1420106770
@@ -6308,7 +6308,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420106767}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.3, y: -3.19, z: 0}
+  m_LocalPosition: {x: 15.11, y: -2.89, z: 1}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6536,7 +6536,7 @@ Transform:
   m_GameObject: {fileID: 1864582001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 1109744803}
   m_Father: {fileID: 690902489}
@@ -6845,13 +6845,13 @@ MonoBehaviour:
   roakHitBox: {fileID: 2042322019}
   speed: 5
   player: {fileID: 629629299}
-  agroDistance: 25
+  agroDistance: 10
   isFacingLeft: 0
   attackDistance: 4
   damageField: {fileID: 1626880578}
   hasSpawned: 0
   startPosition: {x: 0, y: 0, z: 0}
-  Scale: 0.5
+  Scale: 0.25
   Timer: 0
   roakAudioSource: {fileID: 1013215725}
   agroAudio: {fileID: 8300000, guid: b298af32f1e3fa344a82d8d6b4aa6845, type: 3}
@@ -7056,7 +7056,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042322015}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.96, y: -2.015441, z: 0}
+  m_LocalPosition: {x: -19.89, y: -1.18, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0}
   m_Children:
   - {fileID: 1626880579}
@@ -7126,8 +7126,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070074681}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.5788, y: -0.8, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: -5.5788, y: -1, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 563174238}
   m_RootOrder: 0
@@ -7150,4 +7150,4 @@ MonoBehaviour:
   TrainSpawnTime: 9
   TrainDeathTime: 8.75
   TrainSpeed: 2
-  TrainRideHeight: 0.8
+  TrainRideHeight: 1
