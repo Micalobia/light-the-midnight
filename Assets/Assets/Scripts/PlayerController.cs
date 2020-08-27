@@ -2,87 +2,91 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float moveSpeed = 5f;
-    [SerializeField]
-    private float jumpForce = 10f;
-    [SerializeField]
-    private Rigidbody2D playerRb;
-    [SerializeField]
-    private bool isOnGround;
-    [SerializeField]
-    private float health;
-    [SerializeField]
-    private GameObject arm;
-    [SerializeField]
-    private Animator playerAnim;
-    [SerializeField]
-    private float jumpHeight;
-    [SerializeField]
-    private float damage;
-    [SerializeField]
-    private float knockBack;
+    [Header("Movement")]
+    [SerializeField] private float MoveSpeed;
+    [SerializeField] private float JumpForce;
+    //[SerializeField] public float JumpHeight;
+    [SerializeField] [Range(0, .3f)] public float MovementSmoothing;
+    [Header("Combat")]
+    [SerializeField] public float Health;
+    [SerializeField] public float Damage;
+    [SerializeField] public float Knockback;
+    [SerializeField] [Range(0f, 90f)] public float ArmDeadzone = 10f;
+
     //Variable to help detemine when the sprite flips. 
     private float horizontalMove = 0f;
+    private Rigidbody2D playerRB;
+    private GameObject arm;
+    private Animator playerAnim;
+    private bool isOnGround;
+    private Vector3 currentVelocity = Vector3.zero;
+    private bool playerLeft;
+    private bool armLeft;
+    private float moveDeadzone = 1f;
 
+    private void Reset()
+    {
+        MoveSpeed = 50f;
+        JumpForce = 10f;
+        Health = 3f;
+        Damage = 1f;
+        Knockback = 20;
+        MovementSmoothing = .05f;
+        ArmDeadzone = 10f;
+    }
 
-    
-    [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f; 
-    private Vector3 m_Velocity = Vector3.zero;
-
-    [SerializeField]
-    private bool isFacingRight;
     void Awake()
     {
-        playerRb = GetComponent<Rigidbody2D>();
+        playerRB = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
+        arm = transform.GetChild(0).gameObject;
+        FlipArm();
     }
     void Update()
     {
         //Sets the Horizontal Move Variable for the Movement method
-        horizontalMove = Input.GetAxis("Horizontal") * moveSpeed;
+        horizontalMove = Input.GetAxis("Horizontal") * MoveSpeed;
 
         ArmToMouse();
 
         //Makes the player jump
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && isOnGround != false)
         {
-            playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            playerRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
             isOnGround = false;
-            playerAnim.SetBool("hasJumped",true);
+            playerAnim.SetBool("hasJumped", true);
         }
 
     }
 
-    void FixedUpdate()
-    {
-        Move(horizontalMove * Time.fixedDeltaTime);
-    }
+    void FixedUpdate() => Move(horizontalMove * Time.fixedDeltaTime);
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
-           
+
         }
 
         if (other.gameObject.CompareTag("Enemy"))
         {
-            health -= damage;
+            Health -= Damage;
 
-            if (isFacingRight)
+            if (playerLeft)
             {
-                playerRb.AddForce(-Vector2.right * knockBack, ForceMode2D.Impulse);
+                playerRB.AddForce(-Vector2.right * Knockback, ForceMode2D.Impulse);
             }
 
-            if (!isFacingRight)
+            if (!playerLeft)
             {
-                playerRb.AddForce(Vector2.right * knockBack, ForceMode2D.Impulse);
+                playerRB.AddForce(Vector2.right * Knockback, ForceMode2D.Impulse);
             }
-          
+
             CheckHealth();
         }
     }
@@ -99,41 +103,42 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePosition = Input.mousePosition;
 
-        Vector3 targetVelocity = new Vector2(move * 10f, playerRb.velocity.y);
-        playerRb.velocity = Vector3.SmoothDamp(playerRb.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+        Vector3 targetVelocity = new Vector2(move * 10f, playerRB.velocity.y);
+        playerRB.velocity = Vector3.SmoothDamp(playerRB.velocity, targetVelocity, ref currentVelocity, MovementSmoothing);
 
-        if (move < 0 && !isFacingRight || mousePosition.x < -90 && !isFacingRight && move == 0)
+        float angle = arm.transform.up.Angle();
+        float deadsup = 180f - ArmDeadzone;
+        if (armLeft && angle < -ArmDeadzone && angle > -deadsup)
         {
+            Debug.Log(angle);
+            FlipArm();
+        }
+        if (!armLeft && angle > ArmDeadzone && angle < deadsup)
+        {
+            Debug.Log(angle);
+            FlipArm();
+        }
+        if (!playerLeft && playerRB.velocity.x < -moveDeadzone) FlipPlayer();
+        if (playerLeft && playerRB.velocity.x > moveDeadzone) FlipPlayer();
 
-            for (int count = 0; count < 1; count++)
-            {
-                Flip();
-                count++;
-            }
-            //Debug.Log(mousePosition.x);
-        }
-  
-        if (move > 0 && isFacingRight || mousePosition.x > -90 && isFacingRight && move == 0)
-        {
-            for (int count = 0; count < 1; count++)
-            {
-                Flip();
-                count++;
-            }
-            //Debug.Log(mousePosition.x);
-        }
+        //if ((move * Time.deltaTime < 0 && !isFacingLeft) || (mousePosition.x < -90 && !isFacingLeft && move == 0)) Flip();
+
+        //if ((move * Time.deltaTime > 0 && isFacingLeft) || (mousePosition.x > -90 && isFacingLeft && move == 0))
+        //{
+        //    Flip();
+        //}
 
         //This is what triggers the animations for the player.
-        if(move != 0 && health > 0)
+        if (move != 0 && Health > 0)
         {
             playerAnim.SetBool("isRunning", true);
         }
-        else if(move == 0 && health > 0)
+        else if (move == 0 && Health > 0)
         {
             playerAnim.SetBool("isRunning", false);
         }
 
-       
+
     }
 
     //Method to make the arm look at the mouse. 
@@ -153,30 +158,42 @@ public class PlayerController : MonoBehaviour
     }
 
     //Method that flips the game object when it is moving 
-    void Flip()
+    void FlipPlayer()
     {
-        isFacingRight = !isFacingRight;
+        playerLeft = !playerLeft;
 
+        //Vector3 v = transform.localScale;
+        //v.x *= -1;
+        //transform.localScale = v;
         transform.Rotate(0f, 180f, 0f);
+    }
+
+    void FlipArm()
+    {
+        armLeft = !armLeft;
+
+        Vector3 v = arm.transform.localScale;
+        v.y *= -1;
+        arm.transform.localScale = v;
     }
 
     void CheckHealth()
     {
-        if(health > 0)
+        if (Health > 0)
         {
             playerAnim.SetTrigger("tookDamage");
         }
 
-        if(health <= 0)
+        if (Health <= 0)
         {
-            playerAnim.SetBool("isDead",true);
-            
+            playerAnim.SetBool("isDead", true);
+
         }
     }
 
     void isFalling()
     {
-        if(isOnGround == true)
+        if (isOnGround == true)
         {
             playerAnim.SetBool("hasJumped", false);
             playerAnim.SetBool("isFalling", false);

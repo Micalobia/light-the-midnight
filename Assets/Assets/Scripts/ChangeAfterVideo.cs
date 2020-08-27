@@ -21,6 +21,6 @@ public class ChangeAfterVideo : MonoBehaviour
 
     void CheckOver(UnityEngine.Video.VideoPlayer vp)
     {
-        SceneManager.LoadScene("GameScene");//the scene that you want to load after the video has ended.
+        SceneManager.LoadScene("NameScene");//the scene that you want to load after the video has ended.
     }
 }
