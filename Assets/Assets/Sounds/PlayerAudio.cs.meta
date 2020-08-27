@@ -1,9 +1,10 @@
 fileFormatVersion: 2
-guid: 998bb19275275fb40b824269ccbe2387
+guid: 47328b16f6953f64ea1d890f549cec79
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - jumpclip: {fileID: 8300000, guid: 2d371347d1fcfdd40938b4bc29ff24e3, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
