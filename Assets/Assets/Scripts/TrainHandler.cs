@@ -14,8 +14,6 @@ public class TrainHandler : MonoBehaviour
     [SerializeField] public float TrainSpeed;
     [SerializeField] public float TrainRideHeight;
     private const float TimeDif = 0.25f;
-    private float Height => (TrainPlatform.bounds.size.y + Train.bounds.size.y * TrainRideHeight) / 2f;
-    private float Distance => TrainPlatform.bounds.size.x;
     private SpriteRenderer[] Platforms;
     private float timeSinceTrainSpawned;
     private SpriteRenderer train;
@@ -35,12 +33,12 @@ public class TrainHandler : MonoBehaviour
     private void Start()
     {
         Platforms = new SpriteRenderer[PlatformCount];
-        float d = Distance * PlatformCount / 2f;
         for (int i = 0; i < PlatformCount; i++)
         {
             Platforms[i] = Instantiate(TrainPlatform);
-            Platforms[i].transform.SetParent(transform);
+            Platforms[i].transform.SetParentClean(transform);
             float t = (float)i / PlatformCount;
+            float d = Platforms[i].bounds.size.x * PlatformCount / 2f;
             Platforms[i].transform.position = new Vector3(Mathf.LerpUnclamped(d, -d, t), Platforms[i].transform.position.y);
         }
         timeSinceTrainSpawned = 0f;
@@ -57,15 +55,15 @@ public class TrainHandler : MonoBehaviour
         {
             timeSinceTrainSpawned -= TrainSpawnTime;
             train = Instantiate(Train);
-            train.transform.SetParent(transform);
+            train.transform.SetParentClean(transform);
             train.transform.position = Platforms[0].transform.position;
             Vector3 vec = train.transform.position;
-            vec.y += Height;
-            train.transform.position = vec + transform.position;
+            vec.y += (Platforms[0].bounds.size.y + train.bounds.size.y * TrainRideHeight) / 2f; ;
+            train.transform.position = vec;
         }
         if (train != null)
         {
-            train.transform.position += Vector3.left * (TrainSpeed * Time.deltaTime * Distance * train.transform.lossyScale.x);
+            train.transform.position += Vector3.left * (TrainSpeed * Time.deltaTime * Platforms[0].bounds.size.x);
         }
     }
 }

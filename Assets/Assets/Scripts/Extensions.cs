@@ -102,13 +102,13 @@ public static class VectorExtension
     /// </summary>
     public static Vector3 Reflect(this Vector3 vector, Vector3 normal) => -(2 * (Vector3.Dot(vector, normal)) * normal - vector);
 
-    //public static void SetParent(this Transform child, Transform parent)
-    //{
-    //    child.parent = parent;
-    //    child.localPosition = Vector3.zero;
-    //    child.localRotation = Quaternion.identity;
-    //    child.localScale = Vector3.one;
-    //}
+    public static void SetParentClean(this Transform child, Transform parent)
+    {
+        child.parent = parent;
+        child.localPosition = Vector3.zero;
+        child.localRotation = Quaternion.identity;
+        child.localScale = Vector3.one;
+    }
 }
 
 public struct Edge
