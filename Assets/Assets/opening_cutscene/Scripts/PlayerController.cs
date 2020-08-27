@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float Knockback;
     [SerializeField] [Range(0f, 90f)] public float ArmDeadzone = 10f;
 
+    [SerializeField] private bool isInvincible;
+    [SerializeField] private float pickupValue;
+    [SerializeField] private float maxHealth;
+
     //Variable to help detemine when the sprite flips. 
     private float horizontalMove = 0f;
     private Rigidbody2D playerRB;
@@ -41,6 +45,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        maxHealth = Health;
         playerRB = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
         arm = transform.GetChild(0).gameObject;
@@ -48,22 +53,58 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        //Sets the Horizontal Move Variable for the Movement method
-        horizontalMove = Input.GetAxis("Horizontal") * MoveSpeed;
 
-        ArmToMouse();
-
-        //Makes the player jump
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && isOnGround != false)
+        if(Health > 0)
         {
+            //Sets the Horizontal Move Variable for the Movement method
+
+            horizontalMove = Input.GetAxis("Horizontal") * MoveSpeed;
+
+            ArmToMouse();
+
+             //Makes the player jump
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && isOnGround != false)
+            {
             playerRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
             isOnGround = false;
             playerAnim.SetBool("hasJumped", true);
+            }
         }
+       
 
     }
 
     void FixedUpdate() => Move(horizontalMove * Time.fixedDeltaTime);
+
+    public void OnTriggerEnter2D(Collider2D hitBox)
+    {
+        if (hitBox.CompareTag("HurtBox"))
+        {
+            if (!isInvincible && Health > 0)
+            {
+                Health -= Damage;
+
+                if (playerLeft)
+                {
+                    playerRB.AddForce(-Vector2.right * Knockback, ForceMode2D.Impulse);
+                }
+
+                if (!playerLeft)
+                {
+                    playerRB.AddForce(Vector2.right * Knockback, ForceMode2D.Impulse);
+                }
+
+                CheckHealth();
+            }
+        }
+
+        if (hitBox.CompareTag("HealthPickup") && Health < maxHealth)
+        {
+            Health += pickupValue;
+            Destroy(hitBox.gameObject);
+
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -71,23 +112,6 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
 
-        }
-
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Health -= Damage;
-
-            if (playerLeft)
-            {
-                playerRB.AddForce(-Vector2.right * Knockback, ForceMode2D.Impulse);
-            }
-
-            if (!playerLeft)
-            {
-                playerRB.AddForce(Vector2.right * Knockback, ForceMode2D.Impulse);
-            }
-
-            CheckHealth();
         }
     }
 
@@ -101,44 +125,45 @@ public class PlayerController : MonoBehaviour
     //Causes character to move. 
     void Move(float move)
     {
-        Vector2 mousePosition = Input.mousePosition;
-
-        Vector3 targetVelocity = new Vector2(move * 10f, playerRB.velocity.y);
-        playerRB.velocity = Vector3.SmoothDamp(playerRB.velocity, targetVelocity, ref currentVelocity, MovementSmoothing);
-
-        float angle = arm.transform.up.Angle();
-        float deadsup = 180f - ArmDeadzone;
-        if (armLeft && angle < -ArmDeadzone && angle > -deadsup)
+        if(Health > 0)
         {
-            Debug.Log(angle);
-            FlipArm();
+            Vector2 mousePosition = Input.mousePosition;
+
+            Vector3 targetVelocity = new Vector2(move * 10f, playerRB.velocity.y);
+            playerRB.velocity = Vector3.SmoothDamp(playerRB.velocity, targetVelocity, ref currentVelocity, MovementSmoothing);
+
+            float angle = arm.transform.up.Angle();
+            float deadsup = 180f - ArmDeadzone;
+            if (armLeft && angle < -ArmDeadzone && angle > -deadsup)
+            {
+                Debug.Log(angle);
+                FlipArm();
+            }
+            if (!armLeft && angle > ArmDeadzone && angle < deadsup)
+            {
+                Debug.Log(angle);
+                FlipArm();
+            }
+            if (!playerLeft && playerRB.velocity.x < -moveDeadzone) FlipPlayer();
+            if (playerLeft && playerRB.velocity.x > moveDeadzone) FlipPlayer();
+
+            //if ((move * Time.deltaTime < 0 && !isFacingLeft) || (mousePosition.x < -90 && !isFacingLeft && move == 0)) Flip();
+
+            //if ((move * Time.deltaTime > 0 && isFacingLeft) || (mousePosition.x > -90 && isFacingLeft && move == 0))
+            //{
+            //    Flip();
+            //}
+
+            //This is what triggers the animations for the player.
+            if (move != 0 && Health > 0)
+            {
+                playerAnim.SetBool("isRunning", true);
+            }
+            else if (move == 0 && Health > 0)
+            {
+                playerAnim.SetBool("isRunning", false);
+            }
         }
-        if (!armLeft && angle > ArmDeadzone && angle < deadsup)
-        {
-            Debug.Log(angle);
-            FlipArm();
-        }
-        if (!playerLeft && playerRB.velocity.x < -moveDeadzone) FlipPlayer();
-        if (playerLeft && playerRB.velocity.x > moveDeadzone) FlipPlayer();
-
-        //if ((move * Time.deltaTime < 0 && !isFacingLeft) || (mousePosition.x < -90 && !isFacingLeft && move == 0)) Flip();
-
-        //if ((move * Time.deltaTime > 0 && isFacingLeft) || (mousePosition.x > -90 && isFacingLeft && move == 0))
-        //{
-        //    Flip();
-        //}
-
-        //This is what triggers the animations for the player.
-        if (move != 0 && Health > 0)
-        {
-            playerAnim.SetBool("isRunning", true);
-        }
-        else if (move == 0 && Health > 0)
-        {
-            playerAnim.SetBool("isRunning", false);
-        }
-
-
     }
 
     //Method to make the arm look at the mouse. 
@@ -168,6 +193,16 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
+    void setInvincible()
+    {
+        isInvincible = true;
+    }
+
+    void setVulnerable()
+    {
+        isInvincible = false;
+    }
+
     void FlipArm()
     {
         armLeft = !armLeft;
@@ -187,6 +222,7 @@ public class PlayerController : MonoBehaviour
         if (Health <= 0)
         {
             playerAnim.SetBool("isDead", true);
+            
 
         }
     }

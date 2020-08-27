@@ -36,6 +36,8 @@ public class Roak : MonoBehaviour, IEnemy
     private float Scale;
     [SerializeField]
     private float Timer;
+    [SerializeField]
+    private float timerLimit;
 
     //Sound Files for Roak Damage
     [SerializeField]
@@ -48,6 +50,8 @@ public class Roak : MonoBehaviour, IEnemy
 
     private bool soundPlayed;
 
+    [SerializeField] private PlayerController playerController;
+
     #endregion
 
 
@@ -55,6 +59,7 @@ public class Roak : MonoBehaviour, IEnemy
     {
         roakAnim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        playerController = GameObject.FindObjectOfType<PlayerController>();
         roakRb = GetComponent<Rigidbody2D>();
         roakAudioSource = GetComponent<AudioSource>();
         hasSpawned = false;
@@ -113,25 +118,25 @@ public class Roak : MonoBehaviour, IEnemy
                 roakAnim.SetBool("isWalking", true);
 
 
-                if (isFacingLeft && Timer < 5)
+                if (isFacingLeft && Timer < timerLimit)
                 {
                     transform.Translate(-speed * Time.deltaTime, 0f, 0f);
                     transform.localScale = new Vector2(Scale, Scale);
                     Timer += Time.deltaTime;
 
-                    if(Timer > 5)
+                    if(Timer > timerLimit)
                     {
                         isFacingLeft = false;
                         Timer = 0;
                     }
                 }
-                else if (!isFacingLeft && Timer < 5)
+                else if (!isFacingLeft && Timer < timerLimit)
                 {
                     transform.Translate(speed * Time.deltaTime, 0f, 0f);
                     transform.localScale = new Vector2(-Scale, Scale);
                     Timer += Time.deltaTime;
 
-                    if(Timer > 5)
+                    if(Timer > timerLimit)
                     {
                         isFacingLeft = true;
                         Timer = 0;
@@ -186,6 +191,8 @@ public class Roak : MonoBehaviour, IEnemy
         }
        
     }
+
+   
 
     public void Death()
     {
