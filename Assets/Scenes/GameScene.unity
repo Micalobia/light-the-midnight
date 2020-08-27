@@ -5454,18 +5454,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc94f00bd5613b46820a5ef811ed451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FlipDeadzone: 35.57
-  moveSpeed: 50
-  jumpForce: 10
-  playerRb: {fileID: 0}
-  isOnGround: 0
-  health: 3
-  arm: {fileID: 1765655365}
-  playerAnim: {fileID: 0}
-  jumpHeight: 0
-  damage: 1
-  knockBack: 20
-  m_MovementSmoothing: 0.05
+  MoveSpeed: 50
+  JumpForce: 10
+  MovementSmoothing: 0.05
+  Health: 3
+  Damage: 1
+  Knockback: 20
+  ArmDeadzone: 10
 --- !u!114 &629629301
 MonoBehaviour:
   m_ObjectHideFlags: 0
