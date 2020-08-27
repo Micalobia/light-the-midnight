@@ -16,18 +16,28 @@ public class PlayerController : MonoBehaviour
     private float health;
     [SerializeField]
     private GameObject arm;
-
+    [SerializeField]
+    private Animator playerAnim;
+    [SerializeField]
+    private float jumpHeight;
+    [SerializeField]
+    private float damage;
+    [SerializeField]
+    private float knockBack;
     //Variable to help detemine when the sprite flips. 
     private float horizontalMove = 0f;
+
 
     
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f; 
     private Vector3 m_Velocity = Vector3.zero;
 
-    bool isFacingRight;
+    [SerializeField]
+    private bool isFacingRight;
     void Awake()
     {
         playerRb = GetComponent<Rigidbody2D>();
+        playerAnim = GetComponent<Animator>();
     }
     void Update()
     {
@@ -41,6 +51,7 @@ public class PlayerController : MonoBehaviour
         {
             playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isOnGround = false;
+            playerAnim.SetBool("hasJumped",true);
         }
 
     }
@@ -56,6 +67,23 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
            
+        }
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            health -= damage;
+
+            if (isFacingRight)
+            {
+                playerRb.AddForce(-Vector2.right * knockBack, ForceMode2D.Impulse);
+            }
+
+            if (!isFacingRight)
+            {
+                playerRb.AddForce(Vector2.right * knockBack, ForceMode2D.Impulse);
+            }
+          
+            CheckHealth();
         }
     }
 
@@ -76,16 +104,6 @@ public class PlayerController : MonoBehaviour
 
         if (move < 0 && !isFacingRight || mousePosition.x < -90 && !isFacingRight && move == 0)
         {
-            for (int count = 0; count < 1; count++)
-            {
-                Flip();
-                count++;
-            }
-            //Debug.Log(mousePosition.x);
-        }
-  
-        else if (move > 0 && isFacingRight || mousePosition.x > -90 && isFacingRight && move == 0)
-        {
 
             for (int count = 0; count < 1; count++)
             {
@@ -94,6 +112,28 @@ public class PlayerController : MonoBehaviour
             }
             //Debug.Log(mousePosition.x);
         }
+  
+        if (move > 0 && isFacingRight || mousePosition.x > -90 && isFacingRight && move == 0)
+        {
+            for (int count = 0; count < 1; count++)
+            {
+                Flip();
+                count++;
+            }
+            //Debug.Log(mousePosition.x);
+        }
+
+        //This is what triggers the animations for the player.
+        if(move != 0 && health > 0)
+        {
+            playerAnim.SetBool("isRunning", true);
+        }
+        else if(move == 0 && health > 0)
+        {
+            playerAnim.SetBool("isRunning", false);
+        }
+
+       
     }
 
     //Method to make the arm look at the mouse. 
@@ -120,5 +160,32 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
+    void CheckHealth()
+    {
+        if(health > 0)
+        {
+            playerAnim.SetTrigger("tookDamage");
+        }
+
+        if(health <= 0)
+        {
+            playerAnim.SetBool("isDead",true);
+            
+        }
+    }
+
+    void isFalling()
+    {
+        if(isOnGround == true)
+        {
+            playerAnim.SetBool("hasJumped", false);
+            playerAnim.SetBool("isFalling", false);
+        }
+        else
+        {
+            playerAnim.SetBool("hasJumped", false);
+            playerAnim.SetBool("isFalling", true);
+        }
+    }
     #endregion Movement
 }
