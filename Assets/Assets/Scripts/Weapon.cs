@@ -23,12 +23,12 @@ public class Weapon : MonoBehaviour
         Vector2 mousePosition = Input.mousePosition;
 
 
-        if (mousePosition.x < 0 && !isFacingRight)
+        if (mousePosition.x > 0 && !isFacingRight)
         {
             Flip();
         }
 
-        if(mousePosition.x > 0 && isFacingRight)
+        if(mousePosition.x < 0 && isFacingRight)
         {
             Flip();
         }
