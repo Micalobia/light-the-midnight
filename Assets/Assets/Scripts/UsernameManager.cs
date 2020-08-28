@@ -1,20 +1,17 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
+using System.Globalization;
 
 public class UsernameManager: MonoBehaviour
 
 {
-    private void Start()
-    {
-        nameField = GetComponent<InputField>();
-    }
-    public InputField nameField;
+    public GameObject inputField;
 
     // Player name variable and property to access
     // it from other scripts.
-    string playerName;
-    public string PlayerName
+    static string playerName;
+    public static string PlayerName
     {
         get { return playerName; }
         set { Debug.Log("You are not allowed to set the player name like that"); }
@@ -23,9 +20,8 @@ public class UsernameManager: MonoBehaviour
     //Use this on a "Submit" button to set the playerName variable.
     public void SubmitName()
     {
-        if (string.IsNullOrEmpty(nameField.text) == false)
         {
-            playerName = nameField.text;
+            playerName = inputField.GetComponent<Text>().text;
         }
     }
 }
