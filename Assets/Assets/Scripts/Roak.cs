@@ -15,23 +15,29 @@ public class Roak : MonoBehaviour, IEnemy
     [SerializeField] public float Speed;
     [SerializeField] public float AgroDistance;
     [SerializeField] public float AttackDistance;
-    [SerializeField] public GameObject damageField;
-    [SerializeField] public float Timer;
+    [SerializeField] public bool Started;
+    [SerializeField] public EnemyTrigger SpawnTrigger;
     [Header("Audio sources")]
-    [SerializeField] private AudioSource roakAudioSource;
     [SerializeField] private AudioClip agroAudio;
     [SerializeField] private AudioClip deathAudio;
 
+    private float timer;
+    private AudioSource roakAudioSource;
     private Transform player;
+    private GameObject damageField;
     private bool soundPlayed;
     private Rigidbody2D roakRb;
     private Animator roakAnim;
-    private bool IsFacingLeft;
+    private bool isFacingLeft;
     private bool hasSpawned;
     private float scaleX;
     private float scaleY;
     #endregion
 
+    void Reset()
+    {
+
+    }
 
     void Awake()
     {
@@ -40,13 +46,26 @@ public class Roak : MonoBehaviour, IEnemy
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         roakRb = GetComponent<Rigidbody2D>();
         roakAudioSource = GetComponent<AudioSource>();
+        damageField = transform.GetChild(0).gameObject;
         hasSpawned = false;
         scaleX = transform.localScale.x;
         scaleY = transform.localScale.y;
+        gameObject.SetActive(Started);
+        roakAnim.SetBool("Started", Started);
+        SpawnTrigger.OnEnemyTrigger += () =>
+        {
+            Started = true;
+            gameObject.SetActive(Started);
+            roakAnim.SetBool("Started", Started);
+        };
     }
 
     // Update is called once per frame
-    void Update() => CheckDistance();
+    void Update()
+    {
+        
+        CheckDistance();
+    }
 
 
 
@@ -85,28 +104,28 @@ public class Roak : MonoBehaviour, IEnemy
                 roakAnim.SetBool("isWalking", true);
 
 
-                if (IsFacingLeft && Timer < 5)
+                if (isFacingLeft && timer < 5)
                 {
                     transform.Translate(-Speed * Time.deltaTime, 0f, 0f);
                     transform.localScale = new Vector2(scaleX, scaleY);
-                    Timer += Time.deltaTime;
+                    timer += Time.deltaTime;
 
-                    if (Timer > 5)
+                    if (timer > 5)
                     {
-                        IsFacingLeft = false;
-                        Timer = 0;
+                        isFacingLeft = false;
+                        timer = 0;
                     }
                 }
-                else if (!IsFacingLeft && Timer < 5)
+                else if (!isFacingLeft && timer < 5)
                 {
                     transform.Translate(Speed * Time.deltaTime, 0f, 0f);
                     transform.localScale = new Vector2(-scaleX, scaleY);
-                    Timer += Time.deltaTime;
+                    timer += Time.deltaTime;
 
-                    if (Timer > 5)
+                    if (timer > 5)
                     {
-                        IsFacingLeft = true;
-                        Timer = 0;
+                        isFacingLeft = true;
+                        timer = 0;
                     }
                 }
             }
@@ -144,17 +163,17 @@ public class Roak : MonoBehaviour, IEnemy
 
     public void OnCollisionEnter2D(Collision2D objEnv)
     {
-        if (objEnv.gameObject.CompareTag("Obstacle") && IsFacingLeft == true)
+        if (objEnv.gameObject.CompareTag("Obstacle") && isFacingLeft == true)
         {
 
-            IsFacingLeft = false;
-            Timer = 0;
+            isFacingLeft = false;
+            timer = 0;
 
         }
-        else if (objEnv.gameObject.CompareTag("Obstacle") && IsFacingLeft == false)
+        else if (objEnv.gameObject.CompareTag("Obstacle") && isFacingLeft == false)
         {
-            IsFacingLeft = true;
-            Timer = 0;
+            isFacingLeft = true;
+            timer = 0;
         }
 
     }
