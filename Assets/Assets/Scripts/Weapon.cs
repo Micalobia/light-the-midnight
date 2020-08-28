@@ -16,6 +16,14 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private float damage;
 
+    [SerializeField] private AudioClip[] flashclips;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -36,7 +44,15 @@ public class Weapon : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             StartCoroutine(Shoot());
+            AudioClip clip = GetRandomClip();
+            audioSource.PlayOneShot(clip);
+
         }
+    }
+
+    private AudioClip GetRandomClip()
+    {
+        return flashclips[UnityEngine.Random.Range(0, flashclips.Length)];
     }
 
     IEnumerator Shoot()
