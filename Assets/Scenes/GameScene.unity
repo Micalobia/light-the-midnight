@@ -6841,8 +6841,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteOffset: 0
   Health: 100
-  roakAnim: {fileID: 0}
-  roakHitBox: {fileID: 2042322019}
   speed: 5
   player: {fileID: 629629299}
   agroDistance: 10
@@ -7057,7 +7055,7 @@ Transform:
   m_GameObject: {fileID: 2042322015}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -19.89, y: -1.18, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0}
   m_Children:
   - {fileID: 1626880579}
   - {fileID: 1013215726}
