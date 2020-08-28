@@ -20,7 +20,11 @@ public class LightSourceLine : MonoBehaviour
     [SerializeField] [Tooltip("Which layers the light can get blocked by")] public LayerMask Layers;
     [SerializeField] [Tooltip("Which object to create when creating a reflection, should be the Reflection prefab")] public GameObject Reflection;
     [SerializeField] [Tooltip("How many reflections are allowed")] [Range(1, 10)] public int Depth;
+    
     private Vector2 root => new Vector2(transform.position.x, transform.position.y);
+
+    public event OnLightTriggerDelegate OnLightTrigger;
+
     private static int reflectionLayer;
     private List<GameObject> reflections;
     private List<GameObject> reflectionsOld;
@@ -67,6 +71,8 @@ public class LightSourceLine : MonoBehaviour
         reflections = new List<GameObject>();
         ConstructLight();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision) => OnLightTrigger?.Invoke(ref collision);
 
     private void ConstructLight()
     {

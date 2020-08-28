@@ -25,11 +25,11 @@ public class RoakReference : MonoBehaviour
 
     void spawn()
     {
-        roak.spawn();
+        roak.Spawn();
     }
 
     void enableHitbox()
     {
-        roak.enableHitbox();
+        roak.EnableHitBox();
     }
 }

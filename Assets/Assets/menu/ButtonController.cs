@@ -26,4 +26,8 @@ public class ButtonController : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+    public void skipCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
 }
