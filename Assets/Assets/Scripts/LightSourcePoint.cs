@@ -21,6 +21,8 @@ public class LightSourcePoint : MonoBehaviour
     private Mesh mesh;
     private PolygonCollider2D polycol;
 
+    public event OnLightTriggerDelegate OnLightTrigger;
+
     private void Reset()
     {
         FOV = 60f;
@@ -46,6 +48,8 @@ public class LightSourcePoint : MonoBehaviour
         reflections = new List<GameObject>();
         ConstructLight();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision) => OnLightTrigger?.Invoke(ref collision);
 
     private void ConstructLight()
     {

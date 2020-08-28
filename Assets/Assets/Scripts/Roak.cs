@@ -34,11 +34,6 @@ public class Roak : MonoBehaviour, IEnemy
     private float scaleY;
     #endregion
 
-    void Reset()
-    {
-
-    }
-
     void Awake()
     {
         roakHitBox = GetComponent<BoxCollider2D>();
@@ -58,16 +53,22 @@ public class Roak : MonoBehaviour, IEnemy
             gameObject.SetActive(Started);
             roakAnim.SetBool("Started", Started);
         };
+        FindObjectOfType<LightSourceHolder>().OnLightTrigger += OnLightTrigger;
+        //player.GetComponentInChildren<LightSourcePoint>().OnLightTrigger += OnLightTrigger;
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() => CheckDistance();
+
+    private void OnLightTrigger(ref Collider2D col)
     {
-        
-        CheckDistance();
+        if (col.GetInstanceID() == roakHitBox.GetInstanceID())
+        {
+            takeDamage(Health);
+            Debug.Log("Ouchie");
+        }
+
     }
-
-
 
     #region Movement
     public void CheckDistance()
@@ -138,7 +139,7 @@ public class Roak : MonoBehaviour, IEnemy
     {
         Health -= damage;
 
-        if (health <= 0)
+        if (Health <= 0)
         {
             roakAudioSource.PlayOneShot(deathAudio);
 
@@ -194,16 +195,5 @@ public class Roak : MonoBehaviour, IEnemy
         hasSpawned = true;
     }
 
-    public void EnableHitBox()
-    {
-        damageField.SetActive(!damageField.activeInHierarchy);
-        //if (damageField.activeInHierarchy == false)
-        //{
-        //    damageField.SetActive(true);
-        //}
-        //else if (damageField.activeInHierarchy == true)
-        //{
-        //    damageField.SetActive(false);
-        //}
-    }
+    public void EnableHitBox() => damageField.SetActive(!damageField.activeInHierarchy);//if (damageField.activeInHierarchy == false)//{//    damageField.SetActive(true);//}//else if (damageField.activeInHierarchy == true)//{//    damageField.SetActive(false);//}
 }
