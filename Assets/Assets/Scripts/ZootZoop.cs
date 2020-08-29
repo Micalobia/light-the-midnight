@@ -9,38 +9,47 @@ public class ZootZoop : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private BoxCollider2D circuitBreak;
     [SerializeField] private GameObject player;
-    [SerializeField] private float destroyTimer;
-    [SerializeField] private float maxDestroyTimer;
+    [SerializeField] public float destroyTimer;
+    [SerializeField] public float maxDestroyTimer;
     [SerializeField] private bool hasSpawned;
+    [SerializeField] private Transform zootZoopTM;
+
     private void Awake()
     {
         zootZoopRB = GetComponent<Rigidbody2D>();
         zootZoopAnim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
-        
+       
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
         StartCoroutine("StartDeath");
+
+        if (circuitBreak.enabled && player.activeInHierarchy && hasSpawned)
+        {
+            zootZoopRB.transform.Translate(-Vector2.right * speed, 0f);
+            destroyTimer++;
+        }
     }
 
     private void FixedUpdate()
     {
-        if (circuitBreak.enabled && player.activeInHierarchy && hasSpawned)
-        {
-           
-            zootZoopRB.AddForce(-Vector2.right * speed, ForceMode2D.Impulse);
-            destroyTimer++;
-        }
+       
       
     }
 
     IEnumerator StartDeath()
     {
         yield return new WaitUntil(() => destroyTimer > maxDestroyTimer);
-        Destroy(this.gameObject);
+        destroyTimer = 0;
+        zootZoopAnim.SetBool("hasSpawned", false);
+        hasSpawned = false;
+        this.transform.position = new Vector3 (zootZoopTM.position.x,zootZoopTM.position.y);
+        
     }
 
     void Spawn()
