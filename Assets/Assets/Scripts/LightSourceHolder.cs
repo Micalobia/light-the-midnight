@@ -19,6 +19,22 @@ public class LightSourceHolder : MonoBehaviour, ILightSource
             foreach (LightSourceHolder _ in _c) _.OnLightTrigger -= value;
         }
     }
+    public bool TurnedOn
+    {
+        get
+        {
+            foreach (LightSourceLine _ in _a) if(_.TurnedOn) return true;
+            foreach (LightSourcePoint _ in _b) if (_.TurnedOn) return true;
+            foreach (LightSourceHolder _ in _c) if (_.TurnedOn) return true;
+            return false;
+        }
+        set
+        {
+            foreach (LightSourceLine _ in _a) _.TurnedOn = value;
+            foreach (LightSourcePoint _ in _b) _.TurnedOn = value;
+            foreach (LightSourceHolder _ in _c) _.TurnedOn = value;
+        }
+    }
 
     private LightSourceLine[] _a;
     private LightSourcePoint[] _b;
