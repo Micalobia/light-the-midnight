@@ -14,6 +14,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private EnableDamage[] eyes;
     [SerializeField] public float bossHealth;
     [SerializeField] private Animator cutSceneAnimator;
+    
     void Awake()
     {
         bossAnim = GetComponent<Animator>();

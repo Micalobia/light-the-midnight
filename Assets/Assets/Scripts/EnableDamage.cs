@@ -11,11 +11,14 @@ public class EnableDamage : MonoBehaviour, IEnemy
     [SerializeField] private BossController bossController;
     [SerializeField] private AudioClip hurtclip;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private GameObject poof;
+    [SerializeField] private Animator poofAnim;
 
     void Awake()
     {
         bossAnim = GetComponentInParent<Animator>();
         bossController = GetComponentInParent<BossController>();
+        poof.SetActive(false);
     }
     
    
@@ -25,12 +28,19 @@ public class EnableDamage : MonoBehaviour, IEnemy
 
         if(health <= 0)
         {
-            bossAnim.SetBool("EyeIsActive", false);
-            bossController.bossHealth -= 1;
-            Destroy(this.gameObject);
-            audioSource.PlayOneShot(hurtclip);
+            StartCoroutine("EyeDeath");
         }
     }
 
+    IEnumerator EyeDeath()
+    {
+        bossAnim.SetBool("EyeIsActive", false);
+        bossController.bossHealth -= 1;
+        poof.SetActive(true);
+        poofAnim.SetTrigger("poofActive");
+        yield return new WaitForSeconds(poofAnim.GetCurrentAnimatorStateInfo(0).length + poofAnim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        Destroy(this.gameObject);
+        audioSource.PlayOneShot(hurtclip);
+    }
 
 }
