@@ -11,12 +11,14 @@ public class Weapon : MonoBehaviour
     [SerializeField] public float RechargeTime;
     [SerializeField] public float OnTime;
     [SerializeField] LightSourcePoint source;
+    [SerializeField] public GameObject CanvasMenu;
 
     public int ChargesLeft => charges;
 
     private const int _maxCharges = 4;
     private int charges;
     private bool isFacingRight;
+    private float timeFired;
 
     private void Start() => charges = _maxCharges;
 
@@ -34,18 +36,20 @@ public class Weapon : MonoBehaviour
             Flip();
         }
 
-        if (Input.GetButtonDown("Fire1") && charges != 0)
+        if (charges == _maxCharges) timeFired = Time.time;
+        if (CanvasMenu.activeInHierarchy) timeFired += Time.deltaTime;
+        if(Time.time - timeFired > RechargeTime)
         {
+            ++charges;
+            timeFired = Time.time;
+        }
+
+        if (!CanvasMenu.activeInHierarchy && Input.GetButtonDown("Fire1") && charges != 0)
+        {
+            timeFired = Time.time;
             StopCoroutine("Shoot");
             StartCoroutine("Shoot");
-            StartCoroutine(Recharge());
         }
-    }
-
-    IEnumerator Recharge()
-    {
-        yield return new WaitForSeconds(RechargeTime);
-        ++charges;
     }
 
     IEnumerator Shoot()

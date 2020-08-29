@@ -20,7 +20,6 @@ class Battery : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(player.ChargesLeft);
         if (player.ChargesLeft != charges)
         {
             charges = player.ChargesLeft;
