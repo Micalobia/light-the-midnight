@@ -13,10 +13,17 @@ public class TrainHandler : MonoBehaviour
     [SerializeField] public float TrainDeathTime;
     [SerializeField] public float TrainSpeed;
     [SerializeField] public float TrainRideHeight;
+    [SerializeField] private AudioClip trainclip;
+    private AudioSource audioSource;
     private const float TimeDif = 0.25f;
     private SpriteRenderer[] Platforms;
     private float timeSinceTrainSpawned;
     private SpriteRenderer train;
+
+    private void Awake()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
 
     private void Reset()
     {
@@ -60,6 +67,7 @@ public class TrainHandler : MonoBehaviour
             Vector3 vec = train.transform.position;
             vec.y += (Platforms[0].bounds.size.y + train.bounds.size.y * TrainRideHeight) / 2f; ;
             train.transform.position = vec;
+            audioSource.PlayOneShot(trainclip);
         }
         if (train != null)
         {
