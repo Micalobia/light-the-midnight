@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Obstacle
   - HurtBox
+  - HealthPickup
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Opaque
   - Reflective
   - Light
-  - 
+  - BossEye
   - 
   - 
   - 
