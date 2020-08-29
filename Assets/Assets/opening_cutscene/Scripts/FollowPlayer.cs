@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    [SerializeField]
     private Transform player;
-    [SerializeField]
-    private Vector3 offset;
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Vector3 Offset;
+    [SerializeField] private float YAxisThreshold;
+    void Start() => player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
-    // Update is called once per frame
-    void Update()
+    private void Reset()
     {
-        transform.position = new Vector3(player.position.x + offset.x, player.position.y + offset.y, player.position.z + offset.z);
+        Offset = new Vector3(0, 0, -10);
+        YAxisThreshold = 5;
+    }
+    
+    private void Update()
+    {
+        float x = player.position.x + Offset.x;
+        float y = player.position.y + Offset.y;
+        y = Mathf.Clamp(transform.position.y, y - YAxisThreshold, y + YAxisThreshold);
+        float z = player.position.z + Offset.z;
+        transform.position = new Vector3(x,y,z);
     }
 }
