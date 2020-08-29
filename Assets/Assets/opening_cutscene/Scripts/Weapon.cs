@@ -47,9 +47,16 @@ public class Weapon : MonoBehaviour
         {
             Roak roak = projectLaser.transform.GetComponent<Roak>();
 
+            EnableDamage eye = projectLaser.transform.GetComponent<EnableDamage>();
+
             if(roak != null)
             {
                 roak.takeDamage(damage);
+            }
+
+            if(eye != null)
+            {
+                eye.takeDamage(damage);
             }
 
             Instantiate(impact, projectLaser.point, Quaternion.identity);

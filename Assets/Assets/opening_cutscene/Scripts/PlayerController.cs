@@ -113,6 +113,26 @@ public class PlayerController : MonoBehaviour
             isOnGround = true;
 
         }
+
+        if (other.gameObject.CompareTag("HurtBox"))
+        {
+            if (!isInvincible && Health > 0)
+            {
+                Health -= Damage;
+
+                if (playerLeft)
+                {
+                    playerRB.AddForce(-Vector2.right * Knockback, ForceMode2D.Impulse);
+                }
+
+                if (!playerLeft)
+                {
+                    playerRB.AddForce(Vector2.right * Knockback, ForceMode2D.Impulse);
+                }
+
+                CheckHealth();
+            }
+        }
     }
 
     #region Movement
