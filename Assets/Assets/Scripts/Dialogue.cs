@@ -7,4 +7,5 @@ public class Dialogue
 {
     [TextArea(1, 2)]
     public string[] sentences;
+    public AudioClip[] clips;
 }

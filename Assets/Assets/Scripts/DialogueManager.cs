@@ -1,14 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public AudioClip[] clips;
     public float volume = 0.75f;
     public float delay;
     public float time;
@@ -19,13 +16,16 @@ public class DialogueManager : MonoBehaviour
     public GameObject dialogueBox;
     public GameObject Player;
     public GameObject pressSpace;
+    public AudioSource audioSource;
 
     private Queue<string> sentences;
+    private Queue<AudioClip> clips;
 
     // Start is called before the first frame update
     void Awake()
     {
         sentences = new Queue<string>();
+        clips = new Queue<AudioClip>();
     }
 
     private void Update()
@@ -47,7 +47,10 @@ public class DialogueManager : MonoBehaviour
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
-
+        }
+        foreach (AudioClip clip in dialogue.clips)
+        {
+            clips.Enqueue(clip);
         }
 
         DisplayNextSentence();
@@ -61,6 +64,10 @@ public class DialogueManager : MonoBehaviour
         }
 
         string sentence = sentences.Dequeue();
+        AudioClip clip = clips.Dequeue();
+        Debug.Log(clip);
+        Debug.Log(audioSource);
+        audioSource.PlayOneShot(clip);
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
     }
