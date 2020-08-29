@@ -17,11 +17,20 @@ public class DialogueManager : MonoBehaviour
     public GameObject Player;
     public GameObject pressSpace;
     public AudioSource audioSource;
+    public GameObject trigger;
+    public GameObject newTrigger;
+    public GameObject newManager;
 
     private Queue<string> sentences;
     private Queue<AudioClip> clips;
 
-    // Start is called before the first frame update
+
+    private void Start()
+    {
+        newTrigger.SetActive(false);
+        newManager.SetActive(false);
+    }
+
     void Awake()
     {
         sentences = new Queue<string>();
@@ -88,8 +97,11 @@ public class DialogueManager : MonoBehaviour
     {
         animator.SetBool("IsOpen", false);
         dialogueBox.SetActive(false);
+        trigger.SetActive(false);
         Player.SetActive(true);
         pressSpace.SetActive(false);
+        newTrigger.SetActive(true);
+        newManager.SetActive(true);
     }
 
 }
