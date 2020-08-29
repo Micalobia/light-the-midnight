@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
@@ -240,8 +241,8 @@ public class PlayerController : MonoBehaviour
         if (Health <= 0)
         {
             playerAnim.SetBool("isDead", true);
-            
 
+            StartCoroutine(SceneLoadOnDeath());
         }
     }
 
@@ -258,5 +259,16 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetBool("isFalling", true);
         }
     }
+
+    IEnumerator SceneLoadOnDeath()
+    {
+        yield return new WaitForSeconds(playerAnim.GetCurrentAnimatorStateInfo(0).length + playerAnim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        if (SceneManager.GetActiveScene().name == "BossFight")
+        {
+            SceneManager.LoadScene("BossFight");
+        }
+
+    }
+
     #endregion Movement
 }

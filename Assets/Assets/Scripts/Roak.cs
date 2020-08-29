@@ -76,7 +76,7 @@ public class Roak : MonoBehaviour, IEnemy
     {
         if (hasSpawned == true)
         {
-            if (Vector2.Distance(transform.position, player.transform.position) < AgroDistance)
+            if (Vector2.Distance(transform.position, player.transform.position) < AgroDistance && player.gameObject.activeInHierarchy)
             {
                 if (!soundPlayed)
                 {
