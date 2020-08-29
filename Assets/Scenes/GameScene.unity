@@ -7608,11 +7608,11 @@ MonoBehaviour:
   Health: 100
   roakHitBox: {fileID: 0}
   Speed: 5
-  AgroDistance: 0
+  AgroDistance: 10
   AttackDistance: 0
   Started: 0
   SpawnTrigger: {fileID: 2732979734571957312}
-  PatrolTime: 0.1
+  PatrolTime: 1
   agroAudio: {fileID: 8300000, guid: b298af32f1e3fa344a82d8d6b4aa6845, type: 3}
   deathAudio: {fileID: 8300000, guid: a22d2b154d83cce44b93ad78e97bd3e9, type: 3}
 --- !u!95 &2042322017
