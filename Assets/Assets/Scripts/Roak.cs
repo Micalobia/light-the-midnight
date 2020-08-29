@@ -17,6 +17,7 @@ public class Roak : MonoBehaviour, IEnemy
     [SerializeField] public float AttackDistance;
     [SerializeField] public bool Started;
     [SerializeField] public EnemyTrigger SpawnTrigger;
+    [SerializeField] public float PatrolTime;
     [Header("Audio sources")]
     [SerializeField] private AudioClip agroAudio;
     [SerializeField] private AudioClip deathAudio;
@@ -105,7 +106,7 @@ public class Roak : MonoBehaviour, IEnemy
                 roakAnim.SetBool("isWalking", true);
 
 
-                if (isFacingLeft && timer < 5)
+                if (isFacingLeft && timer < PatrolTime)
                 {
                     transform.Translate(-Speed * Time.deltaTime, 0f, 0f);
                     transform.localScale = new Vector2(scaleX, scaleY);
@@ -117,7 +118,7 @@ public class Roak : MonoBehaviour, IEnemy
                         timer = 0;
                     }
                 }
-                else if (!isFacingLeft && timer < 5)
+                else if (!isFacingLeft && timer < PatrolTime)
                 {
                     transform.Translate(Speed * Time.deltaTime, 0f, 0f);
                     transform.localScale = new Vector2(-scaleX, scaleY);
