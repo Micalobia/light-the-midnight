@@ -156,12 +156,10 @@ public class PlayerController : MonoBehaviour
             float deadsup = 180f - ArmDeadzone;
             if (armLeft && angle < -ArmDeadzone && angle > -deadsup)
             {
-                Debug.Log(angle);
                 FlipArm();
             }
             if (!armLeft && angle > ArmDeadzone && angle < deadsup)
             {
-                Debug.Log(angle);
                 FlipArm();
             }
             if (!playerLeft && playerRB.velocity.x < -moveDeadzone) FlipPlayer();

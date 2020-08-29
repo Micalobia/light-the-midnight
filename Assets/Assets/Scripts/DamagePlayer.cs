@@ -7,7 +7,7 @@ public class DamagePlayer : MonoBehaviour
 
     [SerializeField] private PlayerController playerCont;
 
-    private void OnParticleCollision(GameObject other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {

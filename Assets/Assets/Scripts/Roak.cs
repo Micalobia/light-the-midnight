@@ -55,7 +55,7 @@ public class Roak : MonoBehaviour, IEnemy
             roakAnim.SetBool("Started", Started);
         };
         FindObjectOfType<LightSourceHolder>().OnLightTrigger += OnLightTrigger;
-        //player.GetComponentInChildren<LightSourcePoint>().OnLightTrigger += OnLightTrigger;
+        player.GetComponentInChildren<LightSourcePoint>().OnLightTrigger += OnLightTrigger;
     }
 
     // Update is called once per frame

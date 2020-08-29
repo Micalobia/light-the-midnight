@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - HurtBox
   - HealthPickup
+  - PauseMenu
   layers:
   - Default
   - TransparentFX
