@@ -34,7 +34,7 @@ public class Roak : MonoBehaviour, IEnemy
     private float scaleY;
     #endregion
 
-    void Awake()
+    void Start()
     {
         roakHitBox = GetComponent<BoxCollider2D>();
         roakAnim = GetComponent<Animator>();

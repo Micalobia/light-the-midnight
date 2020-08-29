@@ -8,6 +8,7 @@ using UnityEngine;
 public interface ILightSource
 {
     event OnLightTriggerDelegate OnLightTrigger;
+    bool TurnedOn { get; set; }
 }
 
 public delegate void OnLightTriggerDelegate(ref Collider2D collider);

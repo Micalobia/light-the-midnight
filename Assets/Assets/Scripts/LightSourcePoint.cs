@@ -5,23 +5,39 @@ using UnityEngine;
 
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(MeshFilter))]
-public class LightSourcePoint : MonoBehaviour
+[RequireComponent(typeof(MeshRenderer))]
+public class LightSourcePoint : MonoBehaviour, ILightSource
 {
     [Header("Other")]
-    [SerializeField] [Range(0f, 360f)] public float FOV;
-    [SerializeField] public float ViewDistance;
+    [SerializeField] [Range(0f, 360f)] float FOV;
+    [SerializeField] float ViewDistance;
     [SerializeField] [Range(0, 540)] public int RayCount;
-    [SerializeField] [Tooltip("Which layers the light can get blocked by")] public LayerMask Layers;
-    [SerializeField] [Tooltip("Which object to create when creating a reflection, should be the Reflection prefab")] public GameObject Reflection;
-    [SerializeField] [Tooltip("How many reflections are allowed")] [Range(1, 10)] public int Depth;
+    [SerializeField] [Tooltip("Which layers the light can get blocked by")] LayerMask Layers;
+    [SerializeField] [Tooltip("Which object to create when creating a reflection, should be the Reflection prefab")] GameObject Reflection;
+    [SerializeField] [Tooltip("How many reflections are allowed")] [Range(1, 10)] int Depth;
+    [SerializeField] bool StartOn;
+
     private static int reflectionLayer;
     private List<GameObject> reflections;
     private List<GameObject> reflectionsOld;
 
     private Mesh mesh;
-    private PolygonCollider2D polycol;
+    private PolygonCollider2D polyCol;
+    private MeshRenderer meshRenderer;
 
     public event OnLightTriggerDelegate OnLightTrigger;
+    private bool _on;
+
+    public bool TurnedOn
+    {
+        get => _on;
+        set
+        {
+            _on = value;
+            polyCol.enabled = value;
+            meshRenderer.enabled = value;
+        }
+    }
 
     private void Reset()
     {
@@ -30,15 +46,19 @@ public class LightSourcePoint : MonoBehaviour
         RayCount = 90;
         Layers = LayerMask.GetMask("Opaque", "Reflective");
         Depth = 4;
+        StartOn = true;
     }
 
     private void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-        polycol = GetComponent<PolygonCollider2D>();
+        polyCol = GetComponent<PolygonCollider2D>();
         reflections = new List<GameObject>();
         reflectionsOld = new List<GameObject>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        TurnedOn = StartOn;
+        transform.lossyScale.Set(1, 1, 1);
     }
 
     private void Update()
@@ -77,10 +97,10 @@ public class LightSourcePoint : MonoBehaviour
             }
             vertices[i + 1] = rays[i].hit;
         }
-        polycol.enabled = false;
-        polycol.pathCount = 1;
-        polycol.SetPath(0, vertices);
-        polycol.enabled = true;
+        polyCol.enabled = false;
+        polyCol.pathCount = 1;
+        polyCol.SetPath(0, vertices);
+        polyCol.enabled = TurnedOn;
         mesh.vertices = vertices.ToVector3();
         mesh.uv = vertices;
         int[] triangles = new int[vertices.Length * 3];
@@ -138,6 +158,6 @@ public class LightSourcePoint : MonoBehaviour
                 lerp = 1f
             };
         }
-        else return new RayInfo(angleVector * ViewDistance, Vector2.up, angleVector, ViewDistance, false);
+        else return new RayInfo(angleVector * ViewDistance / transform.lossyScale.x, Vector2.up, angleVector, ViewDistance, false);
     }
 }

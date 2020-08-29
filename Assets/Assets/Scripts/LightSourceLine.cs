@@ -5,7 +5,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(PolygonCollider2D))]
-public class LightSourceLine : MonoBehaviour
+[RequireComponent(typeof(MeshRenderer))]
+public class LightSourceLine : MonoBehaviour, ILightSource
 {
     [Header("Side 1")]
     [SerializeField] public Vector3 Vector0;
@@ -20,17 +21,30 @@ public class LightSourceLine : MonoBehaviour
     [SerializeField] [Tooltip("Which layers the light can get blocked by")] public LayerMask Layers;
     [SerializeField] [Tooltip("Which object to create when creating a reflection, should be the Reflection prefab")] public GameObject Reflection;
     [SerializeField] [Tooltip("How many reflections are allowed")] [Range(1, 10)] public int Depth;
-    
+    [SerializeField] public bool StartOn;
+
     private Vector2 root => new Vector2(transform.position.x, transform.position.y);
 
     public event OnLightTriggerDelegate OnLightTrigger;
+    public bool TurnedOn
+    {
+        get => _on;
+        set
+        {
+            _on = value;
+            polyCol.enabled = _on;
+            meshRenderer.enabled = _on;
+        }
+    }
 
     private static int reflectionLayer;
     private List<GameObject> reflections;
     private List<GameObject> reflectionsOld;
+    private bool _on;
 
-    private PolygonCollider2D polygonCollider;
+    private PolygonCollider2D polyCol;
     private Mesh mesh;
+    private MeshRenderer meshRenderer;
 
     private void Reset()
     {
@@ -44,16 +58,19 @@ public class LightSourceLine : MonoBehaviour
         Layers = LayerMask.GetMask("Opaque", "Reflective");
         Reflection = null;
         Depth = 4;
+        StartOn = true;
     }
 
     private void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-        polygonCollider = GetComponent<PolygonCollider2D>();
-        polygonCollider.isTrigger = true;
+        polyCol = GetComponent<PolygonCollider2D>();
+        polyCol.isTrigger = true;
         reflections = new List<GameObject>();
         reflectionsOld = new List<GameObject>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        TurnedOn = StartOn;
     }
 
     private void Update()
@@ -103,10 +120,10 @@ public class LightSourceLine : MonoBehaviour
             vertices[i] = origin;
             vertices[vertices.Length - i - 1] = rays[i].hit;
         }
-        polygonCollider.enabled = false;
-        polygonCollider.pathCount = 1;
-        polygonCollider.SetPath(0, vertices);
-        polygonCollider.enabled = true;
+        polyCol.enabled = false;
+        polyCol.pathCount = 1;
+        polyCol.SetPath(0, vertices);
+        polyCol.enabled = TurnedOn;
         mesh.vertices = vertices.ToVector3();
         mesh.uv = vertices;
         int[] triangles = new int[vertices.Length * 3];

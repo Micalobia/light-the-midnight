@@ -4,80 +4,91 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public Transform laserPoint;
-    public GameObject impact;
 
-    public GameObject Arm;
-    public GameObject Player;
+    [SerializeField] public GameObject Arm;
+    [SerializeField] public GameObject Player;
 
+    [SerializeField] public float RechargeTime;
+    [SerializeField] public float OnTime;
+    [SerializeField] LightSourcePoint source;
+
+    private const int _maxCharges = 4;
+    private int charges;
     private bool isFacingRight;
-    public LineRenderer line;
+    private float lastFire;
 
-    [SerializeField]
-    private float damage;
+    private void Start() => charges = _maxCharges;
 
 
     // Update is called once per frame
     void Update()
     {
         Vector2 mousePosition = Input.mousePosition;
-
+        if (charges == _maxCharges) lastFire = Time.time;
+        if (Time.time - lastFire > RechargeTime)
+        {
+            lastFire = Time.time;
+            ++charges;
+        }
 
         if (mousePosition.x > 0 && !isFacingRight)
         {
             Flip();
         }
 
-        if(mousePosition.x < 0 && isFacingRight)
+        if (mousePosition.x < 0 && isFacingRight)
         {
             Flip();
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && charges != 0)
         {
-            StartCoroutine(Shoot());
+            StopCoroutine("Shoot");
+            StartCoroutine("Shoot");
         }
     }
 
     IEnumerator Shoot()
     {
-        RaycastHit2D projectLaser = Physics2D.Raycast(laserPoint.position, laserPoint.right);
+        //RaycastHit2D projectLaser = Physics2D.Raycast(laserPoint.position, laserPoint.right);
 
-        if (projectLaser)
-        {
-            Roak roak = projectLaser.transform.GetComponent<Roak>();
+        //if (projectLaser)
+        //{
+        //    Roak roak = projectLaser.transform.GetComponent<Roak>();
 
-            if(roak != null)
-            {
-                roak.takeDamage(damage);
-            }
+        //    if(roak != null)
+        //    {
+        //        roak.takeDamage(damage);
+        //    }
 
-            Instantiate(impact, projectLaser.point, Quaternion.identity);
+        //    Instantiate(impact, projectLaser.point, Quaternion.identity);
 
-            line.SetPosition(0, laserPoint.position);
-            line.SetPosition(1, projectLaser.point);
-        }
-        else
-        {
-            line.SetPosition(0, laserPoint.position);
-            line.SetPosition(1, laserPoint.position + laserPoint.right * 100);
-        }
+        //    line.SetPosition(0, laserPoint.position);
+        //    line.SetPosition(1, projectLaser.point);
+        //}
+        //else
+        //{
+        //    line.SetPosition(0, laserPoint.position);
+        //    line.SetPosition(1, laserPoint.position + laserPoint.right * 100);
+        //}
 
-        line.enabled = true;
+        //line.enabled = true;
+        --charges;
+        source.TurnedOn = true;
+        yield return new WaitForSeconds(OnTime);
+        source.TurnedOn = false;
 
-        yield return new WaitForSeconds(0.02f);
+        //line.enabled = false;
 
-        line.enabled = false;
-       
     }
 
     void Flip()
     {
         isFacingRight = !isFacingRight;
 
-        if(isFacingRight)
+        if (isFacingRight)
         {
-            Arm.transform.localScale = new Vector3 (.54f, -.53f, 0f);
+            Arm.transform.localScale = new Vector3(.54f, -.53f, 0f);
         }
 
         if (!isFacingRight)
