@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BossController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private ParticleSystem laser;
     [SerializeField] private EnableDamage[] eyes;
     [SerializeField] public float bossHealth;
+    [SerializeField] private Animator cutSceneAnimator;
     void Awake()
     {
         bossAnim = GetComponent<Animator>();
@@ -24,7 +26,7 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        tentacleNum = Random.Range(0, 5);
+        tentacleNum = Random.Range(0, 6);
         bossAnim.SetInteger("ActiveTentacle", tentacleNum);
         tentacleNum = 0;
 
@@ -36,22 +38,18 @@ public class BossController : MonoBehaviour
         checkHealth();
     }
 
-    void systemEnable()
-    {
-        laser.Play();
-    }
-
-    void systemStop()
-    {
-        laser.Stop();
-    }
-
     void checkHealth()
     {
        if(bossHealth <= 0)
         {
-            SceneManager.LoadScene("DeadBossScene");
+            StartCoroutine("CutScene");
         }
     }
 
+    IEnumerator CutScene()
+    {
+        cutSceneAnimator.SetBool("bossIsDead", true);
+        yield return new WaitForSeconds(cutSceneAnimator.GetCurrentAnimatorStateInfo(0).length + cutSceneAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        SceneManager.LoadScene("DeadBossScene");
+    }
 }
