@@ -41,9 +41,7 @@ public class CircuitBreaker : MonoBehaviour
     {
         if (interact.activeInHierarchy && Input.GetKeyDown(KeyCode.E))
         {
-            interact.SetActive(false);
-            streetLamp.SetTrigger("turnedOff");
-            interactBox.enabled = false;
+            streetLamp.SetBool("switch", !streetLamp.GetBool("switch"));
         }
     }
 

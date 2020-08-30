@@ -13,6 +13,7 @@ public class ZootZoop : MonoBehaviour
     [SerializeField] public float maxDestroyTimer;
     [SerializeField] private bool hasSpawned;
     [SerializeField] private Transform zootZoopTM;
+    [SerializeField] private GameObject spawnTrigger;
 
     private void Awake()
     {
@@ -29,10 +30,20 @@ public class ZootZoop : MonoBehaviour
     {
         StartCoroutine("StartDeath");
 
+        if(player.transform.position.x > spawnTrigger.transform.position.x)
+        {
+            zootZoopAnim.SetBool("ableToSpawn", true);
+        }
+
         if (circuitBreak.enabled && player.activeInHierarchy && hasSpawned)
         {
             zootZoopRB.transform.Translate(-Vector2.right * speed, 0f);
             destroyTimer++;
+        }
+        
+        if(!circuitBreak.enabled)
+        {
+            zootZoopAnim.SetBool("stopped", true);
         }
     }
 
