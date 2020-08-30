@@ -5873,7 +5873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8084443922269074135, guid: 94b387c6576b0314699dab952c8b90e9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1016
+      value: -876.2399
       objectReference: {fileID: 0}
     - target: {fileID: 8084443922269074135, guid: 94b387c6576b0314699dab952c8b90e9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -8134,6 +8134,10 @@ PrefabInstance:
     - target: {fileID: 482885774279321585, guid: b267fabefb795f84ca65523f0a570606, type: 3}
       propertyPath: m_Name
       value: Battery
+      objectReference: {fileID: 0}
+    - target: {fileID: 482885774279321585, guid: b267fabefb795f84ca65523f0a570606, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b267fabefb795f84ca65523f0a570606, type: 3}

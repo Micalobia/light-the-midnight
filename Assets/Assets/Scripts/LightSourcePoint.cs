@@ -38,6 +38,7 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
             meshRenderer.enabled = value;
         }
     }
+    public Vector2 WorldCenter => transform.parent.TransformPoint(transform.position);
 
     private void Reset()
     {
