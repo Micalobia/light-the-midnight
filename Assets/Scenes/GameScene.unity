@@ -6520,6 +6520,7 @@ GameObject:
   - component: {fileID: 1420106770}
   - component: {fileID: 1420106769}
   - component: {fileID: 1420106768}
+  - component: {fileID: 1420106771}
   m_Layer: 0
   m_Name: dumpster (1)
   m_TagString: Obstacle
@@ -6618,6 +6619,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1420106771
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420106767}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1453572864
 GameObject:
   m_ObjectHideFlags: 0
@@ -9559,6 +9581,10 @@ PrefabInstance:
     - target: {fileID: 7745234618516114169, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
       propertyPath: m_SortingOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7745234618516114171, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7745234618516114174, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
       propertyPath: flashclips.Array.size

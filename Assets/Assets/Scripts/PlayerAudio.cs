@@ -17,7 +17,7 @@ public class PlayerAudio : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
     }
 
-    private void Jump()
+    private void jumpNoise()
     {
         audioSource.PlayOneShot(jumpclip);
     }

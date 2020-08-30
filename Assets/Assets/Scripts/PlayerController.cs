@@ -66,9 +66,7 @@ public class PlayerController : MonoBehaviour
              //Makes the player jump
             if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && isOnGround != false)
             {
-            playerRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
-            isOnGround = false;
-            playerAnim.SetBool("hasJumped", true);
+               playerAnim.SetBool("hasJumped", true);
             }
         }
        
@@ -112,7 +110,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
-
+            playerAnim.SetBool("isOnGround", true);
         }
 
         if (other.gameObject.CompareTag("HurtBox"))
@@ -212,6 +210,11 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
+    void Jump()
+    {
+        playerRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+        isOnGround = false;
+    }
     void setInvincible()
     {
         isInvincible = true;
@@ -251,12 +254,14 @@ public class PlayerController : MonoBehaviour
         if (isOnGround == true)
         {
             playerAnim.SetBool("hasJumped", false);
+            playerAnim.SetBool("isOnGround", true);
             playerAnim.SetBool("isFalling", false);
         }
         else
         {
             playerAnim.SetBool("hasJumped", false);
             playerAnim.SetBool("isFalling", true);
+            playerAnim.SetBool("isOnGround", false);
         }
     }
 
