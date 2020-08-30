@@ -22,6 +22,12 @@ public class Weapon : MonoBehaviour
 
     private void Start() => charges = _maxCharges;
 
+    public event OnLightTriggerDelegate OnLightTrigger
+    {
+        add => source.OnLightTrigger += value;
+        remove => source.OnLightTrigger -= value;
+    }
+
     void Update()
     {
         Vector2 mousePosition = Input.mousePosition;

@@ -5,20 +5,15 @@ using UnityEngine;
 public class HealthManagement : MonoBehaviour
 {
 
-    [SerializeField] private Animator healthAnim;
-    [SerializeField] private PlayerController player;
+    private Animator _healthAnim;
+    private PlayerController _player;
     void Awake()
     {
-        healthAnim = GetComponent<Animator>();
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        _healthAnim = GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-        HealthCheck();
-    }
+    private void Update() => HealthCheck();
 
-    void HealthCheck()
-    {
-        healthAnim.SetFloat("Health", player.Health);
-    }
+    void HealthCheck() => _healthAnim.SetInteger("Health", _player.Health);
 }
