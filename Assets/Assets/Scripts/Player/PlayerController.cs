@@ -13,13 +13,14 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] public float JumpHeight;
     [SerializeField] [Range(0, .3f)] public float MovementSmoothing;
     [Header("Combat")]
-    [SerializeField] public float Health;
-    [SerializeField] public float Damage;
+    [SerializeField] public int Health;
+    [SerializeField] public int Damage;
     [SerializeField] public float Knockback;
     [SerializeField] [Range(0f, 90f)] public float ArmDeadzone = 10f;
+    [SerializeField] private float InvincibilityTime;
 
     [SerializeField] private bool isInvincible;
-    [SerializeField] private float pickupValue;
+    [SerializeField] private int pickupValue;
     [SerializeField] private float maxHealth;
 
     //Variable to help detemine when the sprite flips. 
@@ -37,11 +38,12 @@ public class PlayerController : MonoBehaviour
     {
         MoveSpeed = 50f;
         JumpForce = 10f;
-        Health = 3f;
-        Damage = 1f;
+        Health = 3;
+        Damage = 1;
         Knockback = 20;
         MovementSmoothing = .05f;
         ArmDeadzone = 10f;
+        InvincibilityTime = .75f;
     }
 
     void Awake()
@@ -55,7 +57,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        if(Health > 0)
+        if (Health > 0)
         {
             //Sets the Horizontal Move Variable for the Movement method
 
@@ -63,15 +65,15 @@ public class PlayerController : MonoBehaviour
 
             ArmToMouse();
 
-             //Makes the player jump
+            //Makes the player jump
             if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && isOnGround != false)
             {
-            playerRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
-            isOnGround = false;
-            playerAnim.SetBool("hasJumped", true);
+                playerRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+                isOnGround = false;
+                playerAnim.SetBool("hasJumped", true);
             }
         }
-       
+
 
     }
 
@@ -115,25 +117,30 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (other.gameObject.CompareTag("HurtBox"))
+        if (other.gameObject.CompareTag("HurtBox")) DamagePlayer(Damage);
+    }
+
+    public void DamagePlayer(int damage)
+    {
+        if (!isInvincible && Health > 0)
         {
-            if (!isInvincible && Health > 0)
-            {
-                Health -= Damage;
-
-                if (playerLeft)
-                {
-                    playerRB.AddForce(-Vector2.right * Knockback, ForceMode2D.Impulse);
-                }
-
-                if (!playerLeft)
-                {
-                    playerRB.AddForce(Vector2.right * Knockback, ForceMode2D.Impulse);
-                }
-
-                CheckHealth();
-            }
+            Health -= damage;
+            //if (playerLeft)
+            //{
+            //    playerRB.AddForce(-Vector2.right * Knockback, ForceMode2D.Impulse);
+            //}
+            //else
+            //{
+            //    playerRB.AddForce(Vector2.right * Knockback, ForceMode2D.Impulse);
+            //}
+            CheckHealth();
         }
+    }
+
+    private IEnumerator IFrames()
+    {
+        setInvincible();
+        yield return new WaitForSeconds(InvincibilityTime);
     }
 
     #region Movement
@@ -146,7 +153,7 @@ public class PlayerController : MonoBehaviour
     //Causes character to move. 
     void Move(float move)
     {
-        if(Health > 0)
+        if (Health > 0)
         {
             Vector2 mousePosition = Input.mousePosition;
 
@@ -212,15 +219,9 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
-    void setInvincible()
-    {
-        isInvincible = true;
-    }
+    void setInvincible() => isInvincible = true;
 
-    void setVulnerable()
-    {
-        isInvincible = false;
-    }
+    void setVulnerable() => isInvincible = false;
 
     void FlipArm()
     {
@@ -236,6 +237,7 @@ public class PlayerController : MonoBehaviour
         if (Health > 0)
         {
             playerAnim.SetTrigger("tookDamage");
+            StartCoroutine(IFrames());
         }
 
         if (Health <= 0)
