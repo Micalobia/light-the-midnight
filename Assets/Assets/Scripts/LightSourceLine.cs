@@ -24,6 +24,7 @@ public class LightSourceLine : MonoBehaviour, ILightSource
     [SerializeField] public bool StartOn;
 
     private Vector2 root => new Vector2(transform.position.x, transform.position.y);
+    public Vector2 WorldCenter => transform.TransformPoint(transform.position);
 
     public event OnLightTriggerDelegate OnLightTrigger;
     public bool TurnedOn
