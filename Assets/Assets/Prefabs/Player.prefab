@@ -299,6 +299,7 @@ MonoBehaviour:
   RechargeTime: 0
   OnTime: 0
   source: {fileID: 0}
+  CanvasMenu: {fileID: 0}
 --- !u!95 &7745234618516114173
 Animator:
   serializedVersion: 3

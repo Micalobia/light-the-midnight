@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LightSourceHolder : MonoBehaviour, ILightSource
+public class LightSourceHolder : MonoBehaviour, ILightSource, IEnumerable<ILightSource>
 {
     public event OnLightTriggerDelegate OnLightTrigger
     {
@@ -23,7 +24,7 @@ public class LightSourceHolder : MonoBehaviour, ILightSource
     {
         get
         {
-            foreach (LightSourceLine _ in _a) if(_.TurnedOn) return true;
+            foreach (LightSourceLine _ in _a) if (_.TurnedOn) return true;
             foreach (LightSourcePoint _ in _b) if (_.TurnedOn) return true;
             foreach (LightSourceHolder _ in _c) if (_.TurnedOn) return true;
             return false;
@@ -35,6 +36,7 @@ public class LightSourceHolder : MonoBehaviour, ILightSource
             foreach (LightSourceHolder _ in _c) _.TurnedOn = value;
         }
     }
+    public Vector2 WorldCenter => transform.TransformPoint(transform.position);
 
     private LightSourceLine[] _a;
     private LightSourcePoint[] _b;
@@ -48,4 +50,14 @@ public class LightSourceHolder : MonoBehaviour, ILightSource
         c.Remove(this);
         _c = c.ToArray();
     }
+
+    public IEnumerator<ILightSource> GetEnumerator()
+    {
+        List<ILightSource> ret = new List<ILightSource>();
+        ret.AddRange(_a);
+        ret.AddRange(_b);
+        ret.AddRange(_c);
+        return ret.GetEnumerator();
+    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
