@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
                 playerRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
                 isOnGround = false;
                 playerAnim.SetBool("hasJumped", true);
+                playerAnim.SetBool("isOnGround", false);
             }
         }
 
@@ -114,7 +115,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
-
+            playerAnim.SetBool("isOnGround", true);
         }
 
         if (other.gameObject.CompareTag("HurtBox")) DamagePlayer(Damage);
