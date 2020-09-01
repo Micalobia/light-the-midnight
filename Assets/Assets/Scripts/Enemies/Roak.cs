@@ -46,7 +46,7 @@ class Roak : MonoBehaviour
     private Vector2 _velocity;
     private bool _ready;
     private CapsuleCollider2D _mainCol;
-    private AudioSource _source;
+    private AudioSource _roakaudio;
     private bool _ableToAttack;
     private bool _agro;
     private bool _spawned;
@@ -93,7 +93,7 @@ class Roak : MonoBehaviour
         LightSourceHolder holder = FindObjectOfType<LightSourceHolder>();
         if (holder != null) holder.OnLightTrigger += OnLightTrigger;
         _mainCol = GetComponent<CapsuleCollider2D>();
-        _source = GetComponent<AudioSource>();
+        _roakaudio = GetComponent<AudioSource>();
         _ableToAttack = true;
         _spawned = false;
     }
@@ -139,7 +139,7 @@ class Roak : MonoBehaviour
     private void SetAgro(bool value)
     {
         if (value && !_agro)
-            _source.PlayOneShot(OnAgroClip);
+        _roakaudio.PlayOneShot(OnAgroClip);
         _agro = value;
         _anim.SetBool("Agro", value);
     }
@@ -163,9 +163,15 @@ class Roak : MonoBehaviour
     }
     private void StartDeath()
     {
-        if (!_dead) _source.PlayOneShot(OnDeathClip);
+        if (!_dead)
         _dead = true;
         _anim.SetBool("Dead", true);
+    }
+
+
+    private void DeathNoise()
+    {
+        _roakaudio.PlayOneShot(OnDeathClip);
     }
     private void Die() => Destroy(gameObject);
     private void Spawned() => _spawned = true;
