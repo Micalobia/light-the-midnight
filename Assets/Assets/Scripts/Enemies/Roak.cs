@@ -112,7 +112,7 @@ class Roak : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_ableToAttack && collision.gameObject == _player)
+        if (!_dead && _ableToAttack && collision.gameObject == _player)
         {
             _playerController.DamagePlayer(1);
             _anim.SetTrigger("Attacking");
@@ -166,6 +166,7 @@ class Roak : MonoBehaviour
         if (!_dead)
         _dead = true;
         _anim.SetBool("Dead", true);
+        _mainCol.enabled = false;
     }
 
 
