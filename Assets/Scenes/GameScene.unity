@@ -6150,6 +6150,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7745234618516114148, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
   m_PrefabInstance: {fileID: 7745234618054437771}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &518165124 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7745234618516114163, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
+  m_PrefabInstance: {fileID: 7745234618054437771}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &518165129 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7745234618516114175, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
@@ -9073,8 +9078,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62003535b2f77294bac25051fabb19a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FOV: 30
-  ViewDistance: 6
+  FOV: 25
+  ViewDistance: 4.5
   RayCount: 45
   Layers:
     serializedVersion: 2
@@ -15518,6 +15523,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7745234618516114174, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
+      propertyPath: flashlightclips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7745234618516114174, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
       propertyPath: flashclips.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: 5bc43ff286d1cbc43b9dfbae5eb2140b, type: 3}
@@ -15541,6 +15550,18 @@ PrefabInstance:
       propertyPath: CanvasMenu
       value: 
       objectReference: {fileID: 1264438097}
+    - target: {fileID: 7745234618516114174, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
+      propertyPath: clickSource
+      value: 
+      objectReference: {fileID: 518165124}
+    - target: {fileID: 7745234618516114174, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
+      propertyPath: flashlightclips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5bc43ff286d1cbc43b9dfbae5eb2140b, type: 3}
+    - target: {fileID: 7745234618516114174, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
+      propertyPath: flashlightclips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 82d0e77c99927fc499f19fa28e228c34, type: 3}
     - target: {fileID: 7745234618516114175, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
       propertyPath: isInvincible
       value: 0
