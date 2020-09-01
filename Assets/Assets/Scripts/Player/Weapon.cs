@@ -12,6 +12,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] public float OnTime;
     [SerializeField] LightSourcePoint source;
     [SerializeField] public GameObject CanvasMenu;
+    
+    [SerializeField] private AudioClip[] flashlightclips;
+    [SerializeField] private AudioSource clickSource;
 
     public int ChargesLeft => charges;
 
@@ -28,6 +31,10 @@ public class Weapon : MonoBehaviour
         remove => source.OnLightTrigger -= value;
     }
 
+    private void Awake()
+    {
+        clickSource = gameObject.GetComponent<AudioSource>();
+    }
     void Update()
     {
         Vector2 mousePosition = Input.mousePosition;
@@ -52,6 +59,8 @@ public class Weapon : MonoBehaviour
 
         if (!CanvasMenu.activeInHierarchy && Input.GetButtonDown("Fire1") && charges != 0)
         {
+            AudioClip clip = GetRandomClip();
+            clickSource.PlayOneShot(clip);
             timeFired = Time.time;
             StopCoroutine("Shoot");
             StartCoroutine("Shoot");
@@ -105,5 +114,10 @@ public class Weapon : MonoBehaviour
         {
             Arm.transform.localScale = new Vector3(.54f, .53f, 0f);
         }
+    }
+
+    private AudioClip GetRandomClip()
+    {
+        return flashlightclips[UnityEngine.Random.Range(0, flashlightclips.Length)];
     }
 }

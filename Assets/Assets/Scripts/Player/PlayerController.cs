@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public int Damage;
     [SerializeField] public float Knockback;
     [SerializeField] [Range(0f, 90f)] public float ArmDeadzone = 10f;
-    [SerializeField] private float InvincibilityTime;
 
     [SerializeField] private bool isInvincible;
     [SerializeField] private int pickupValue;
@@ -43,7 +42,6 @@ public class PlayerController : MonoBehaviour
         Knockback = 20;
         MovementSmoothing = .05f;
         ArmDeadzone = 10f;
-        InvincibilityTime = .75f;
     }
 
     void Awake()
@@ -57,7 +55,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        if (Health > 0)
+        if(Health > 0)
         {
             //Sets the Horizontal Move Variable for the Movement method
 
@@ -65,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
             ArmToMouse();
 
-            //Makes the player jump
+             //Makes the player jump
             if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && isOnGround != false)
             {
                 playerRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
@@ -74,32 +72,26 @@ public class PlayerController : MonoBehaviour
                 playerAnim.SetBool("isOnGround", false);
             }
         }
-
+       
 
     }
 
     void FixedUpdate() => Move(horizontalMove * Time.fixedDeltaTime);
 
+    public void DamagePlayer(int damage)
+    {
+        if(!isInvincible && Health > 0)
+        {
+            Health -= damage;
+            CheckHealth();
+        }
+    }
+
     public void OnTriggerEnter2D(Collider2D hitBox)
     {
         if (hitBox.CompareTag("HurtBox"))
         {
-            if (!isInvincible && Health > 0)
-            {
-                Health -= Damage;
-
-                if (playerLeft)
-                {
-                    playerRB.AddForce(-Vector2.right * Knockback, ForceMode2D.Impulse);
-                }
-
-                if (!playerLeft)
-                {
-                    playerRB.AddForce(Vector2.right * Knockback, ForceMode2D.Impulse);
-                }
-
-                CheckHealth();
-            }
+            DamagePlayer(Damage);
         }
 
         if (hitBox.CompareTag("HealthPickup") && Health < maxHealth)
@@ -118,30 +110,10 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetBool("isOnGround", true);
         }
 
-        if (other.gameObject.CompareTag("HurtBox")) DamagePlayer(Damage);
-    }
-
-    public void DamagePlayer(int damage)
-    {
-        if (!isInvincible && Health > 0)
+        if (other.gameObject.CompareTag("HurtBox"))
         {
-            Health -= damage;
-            //if (playerLeft)
-            //{
-            //    playerRB.AddForce(-Vector2.right * Knockback, ForceMode2D.Impulse);
-            //}
-            //else
-            //{
-            //    playerRB.AddForce(Vector2.right * Knockback, ForceMode2D.Impulse);
-            //}
-            CheckHealth();
+            DamagePlayer(Damage);
         }
-    }
-
-    private IEnumerator IFrames()
-    {
-        setInvincible();
-        yield return new WaitForSeconds(InvincibilityTime);
     }
 
     #region Movement
@@ -154,7 +126,7 @@ public class PlayerController : MonoBehaviour
     //Causes character to move. 
     void Move(float move)
     {
-        if (Health > 0)
+        if(Health > 0)
         {
             Vector2 mousePosition = Input.mousePosition;
 
@@ -220,9 +192,20 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
-    void setInvincible() => isInvincible = true;
+    void Jump()
+    {
+        playerRB.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+        isOnGround = false;
+    }
+    void setInvincible()
+    {
+        isInvincible = true;
+    }
 
-    void setVulnerable() => isInvincible = false;
+    void setVulnerable()
+    {
+        isInvincible = false;
+    }
 
     void FlipArm()
     {
@@ -238,7 +221,6 @@ public class PlayerController : MonoBehaviour
         if (Health > 0)
         {
             playerAnim.SetTrigger("tookDamage");
-            StartCoroutine(IFrames());
         }
 
         if (Health <= 0)
@@ -254,12 +236,14 @@ public class PlayerController : MonoBehaviour
         if (isOnGround == true)
         {
             playerAnim.SetBool("hasJumped", false);
+            playerAnim.SetBool("isOnGround", true);
             playerAnim.SetBool("isFalling", false);
         }
         else
         {
             playerAnim.SetBool("hasJumped", false);
             playerAnim.SetBool("isFalling", true);
+            playerAnim.SetBool("isOnGround", false);
         }
     }
 
