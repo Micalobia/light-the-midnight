@@ -16,12 +16,15 @@ public class EnableDamage : MonoBehaviour, IEnemy
     [SerializeField] private Animator poofAnim;
     [SerializeField] private int index;
 
+    private CapsuleCollider2D _capCol;
+
     void Awake()
     {
         bossAnim = GetComponentInParent<Animator>();
         bossController = GetComponentInParent<BossController>();
         poof.SetActive(false);
         GameObject.FindGameObjectWithTag("Player").GetComponent<Weapon>().OnLightTrigger += OnLightTrigger;
+        _capCol = GetComponent<CapsuleCollider2D>();
     }
 
     private void OnLightTrigger(ref Collider2D collider)
@@ -32,6 +35,9 @@ public class EnableDamage : MonoBehaviour, IEnemy
             takeDamage(1f);
         }
     }
+
+    public void enableCollision() => _capCol.enabled = true;
+    public void disableCollision() => _capCol.enabled = false;
 
     public virtual void takeDamage(float damage)
     {
