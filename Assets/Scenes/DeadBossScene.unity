@@ -1117,6 +1117,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7745234618516114148, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
   m_PrefabInstance: {fileID: 1223682002}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1050570176 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 846145771348612258, guid: 57e9f5c6783b24a4ab554314f0879204, type: 3}
+  m_PrefabInstance: {fileID: 237593715}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1141321012 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5356292541588604657, guid: a02dace9bcfe8f941b3017202e17d8d7, type: 3}
@@ -1432,7 +1437,7 @@ PrefabInstance:
     - target: {fileID: 7745234618516114174, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
       propertyPath: CanvasMenu
       value: 
-      objectReference: {fileID: 1367732007}
+      objectReference: {fileID: 1050570176}
     - target: {fileID: 7745234618516114175, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
       propertyPath: JumpForce
       value: 7.5
@@ -1448,11 +1453,6 @@ GameObject:
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6594348188334059449, guid: 25222d2136932d540ba1080666a02ebf, type: 3}
   m_PrefabInstance: {fileID: 2058330595}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1367732007 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 846295316107650440, guid: 57e9f5c6783b24a4ab554314f0879204, type: 3}
-  m_PrefabInstance: {fileID: 237593715}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1589080762
 GameObject:
