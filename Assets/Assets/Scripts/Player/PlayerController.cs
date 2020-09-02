@@ -256,10 +256,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator SceneLoadOnDeath()
     {
         yield return new WaitForSeconds(playerAnim.GetCurrentAnimatorStateInfo(0).length + playerAnim.GetCurrentAnimatorStateInfo(0).normalizedTime);
-        if (SceneManager.GetActiveScene().name == "BossFight")
-        {
-            SceneManager.LoadScene("BossFight");
-        }
+        Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
 
     }
 

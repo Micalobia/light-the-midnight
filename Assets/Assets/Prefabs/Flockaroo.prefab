@@ -48,9 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 100
+  PatrolSpeed: 4
   PatrolPoint1: {x: -7.5, y: 3}
   PatrolPoint2: {x: 7.5, y: 3}
-  PatrolSpeed: 4
   ShinySpeed: 8
   ShinyRange: 12
   DiveRange: 8
@@ -58,7 +58,7 @@ MonoBehaviour:
   DiveAngle: 45
   DiveTime: 1
   DiveCooldown: 5
-  AgroRange: 12
+  AgroRange: 9
   AgroSpeed: 6
   OnAgroClip: {fileID: 8300000, guid: 06e3536797a60bc49b03bfbeabd0a52a, type: 3}
   OnDeathClip: {fileID: 8300000, guid: e83df6fd16d9f3e48baa9678a1aedce1, type: 3}
