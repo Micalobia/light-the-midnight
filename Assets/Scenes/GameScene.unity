@@ -6452,11 +6452,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683556, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 58.6
+      value: 33.4
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683556, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 44.2
+      value: 38.29
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683556, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6516,7 +6516,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: e83df6fd16d9f3e48baa9678a1aedce1, type: 3}
     - target: {fileID: 6475546796510683557, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: PatrolPoint1.x
-      value: -7.5
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683557, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: PatrolPoint1.y
@@ -6524,7 +6524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683557, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: PatrolPoint2.x
-      value: 7.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683557, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: PatrolPoint2.y
@@ -8115,7 +8115,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &610545812
 GameObject:
@@ -9413,7 +9413,7 @@ Transform:
   - {fileID: 494326685}
   - {fileID: 1160774169}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &794730564 stripped
 GameObject:
@@ -11883,11 +11883,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683556, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 74.4
+      value: 94.9
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683556, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 44.2
+      value: 38.29
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683556, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11947,7 +11947,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: e83df6fd16d9f3e48baa9678a1aedce1, type: 3}
     - target: {fileID: 6475546796510683557, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: PatrolPoint1.x
-      value: -7.5
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683557, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: PatrolPoint1.y
@@ -11955,7 +11955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683557, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: PatrolPoint2.x
-      value: 7.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6475546796510683557, guid: 3311af317f0292b42b0f9a3d3a268ded, type: 3}
       propertyPath: PatrolPoint2.y
