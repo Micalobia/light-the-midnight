@@ -10,6 +10,8 @@ public interface ILightSource
     event OnLightTriggerDelegate OnLightTrigger;
     bool TurnedOn { get; set; }
     Vector2 WorldCenter { get; }
+    bool UseInteract { get; set; }
+    InteractReceiver interactReceiver { get; set; }
 }
 
 public delegate void OnLightTriggerDelegate(ref Collider2D collider);

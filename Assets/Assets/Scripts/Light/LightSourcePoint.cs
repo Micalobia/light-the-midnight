@@ -16,6 +16,7 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
     [SerializeField] [Tooltip("Which object to create when creating a reflection, should be the Reflection prefab")] GameObject Reflection;
     [SerializeField] [Tooltip("How many reflections are allowed")] [Range(1, 10)] int Depth;
     [SerializeField] bool StartOn;
+    [SerializeField] private bool Interactable;
 
     private static int reflectionLayer;
     private List<GameObject> reflections;
@@ -39,6 +40,8 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
         }
     }
     public Vector2 WorldCenter => transform.parent.TransformPoint(transform.position);
+    public bool UseInteract { get => Interactable; set => Interactable = value; }
+    public InteractReceiver interactReceiver { get; set; }
 
     private void Reset()
     {
@@ -61,6 +64,11 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
         meshRenderer.sortingLayerName = "UI";
         TurnedOn = StartOn;
         transform.lossyScale.Set(1, 1, 1);
+        if (UseInteract)
+        {
+            interactReceiver = GetComponent<InteractReceiver>();
+            interactReceiver.OnInteract += () => TurnedOn = !TurnedOn;
+        }
     }
 
     private void Update()
