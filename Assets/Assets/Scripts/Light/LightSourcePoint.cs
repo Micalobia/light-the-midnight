@@ -58,6 +58,7 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
         reflections = new List<GameObject>();
         reflectionsOld = new List<GameObject>();
         meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.sortingLayerName = "UI";
         TurnedOn = StartOn;
         transform.lossyScale.Set(1, 1, 1);
     }

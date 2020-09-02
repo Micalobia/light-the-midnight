@@ -71,6 +71,7 @@ public class LightSourceLine : MonoBehaviour, ILightSource
         reflections = new List<GameObject>();
         reflectionsOld = new List<GameObject>();
         meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.sortingLayerName = "UI";
         TurnedOn = StartOn;
     }
 
