@@ -28,6 +28,10 @@ public class Flockaroo : MonoBehaviour, IEnemy
     [SerializeField] private float AgroRange;
     [SerializeField] private float AgroSpeed;
 
+    [SerializeField] private AudioClip OnAgroClip;
+    [SerializeField] private AudioClip OnDeathClip;
+    private AudioSource _flockaudio;
+
     private Vector2 WorldCenter => transform.position;
     private Vector2 PlayerCenter => _player.position;
 
@@ -61,6 +65,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
 
     private void Start()
     {
+        _flockaudio = GetComponent<AudioSource>();
         _lights = FindObjectOfType<LightSourceHolder>();
         _lights.OnLightTrigger += OnLightTrigger;
         transform.position = PatrolPoint1;
@@ -173,6 +178,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
 
         if (health <= 0)
         {
+            _flockaudio.PlayOneShot(OnDeathClip);
             _dead = true;
             _anim.SetTrigger("Kill");
             _boxCol.enabled = false;
@@ -187,10 +193,14 @@ public class Flockaroo : MonoBehaviour, IEnemy
         }
     }
 
-    private void Die() => Destroy(gameObject);
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
 
     private void Dive()
     {
+        _flockaudio.PlayOneShot(OnAgroClip);
         _diving = true;
         _anim.SetTrigger("Dive");
         StartCoroutine(AnimateDive());
