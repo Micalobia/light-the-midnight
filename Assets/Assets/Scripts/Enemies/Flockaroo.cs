@@ -18,6 +18,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
     [Header("Shiny")]
     [SerializeField] private float ShinySpeed;
     [SerializeField] private float ShinyRange;
+    [SerializeField] private bool CanDieToFlashlight;
     [Header("Dive")]
     [SerializeField] private float DiveRange;
     [SerializeField] private Vector2 DiveScale;
@@ -93,6 +94,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
         _boxCol = GetComponent<BoxCollider2D>();
         _diving = false;
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        if (CanDieToFlashlight) _player.GetComponent<Weapon>().OnLightTrigger += OnLightTrigger;
         _diveCooldown = float.NegativeInfinity;
     }
 
