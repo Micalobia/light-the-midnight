@@ -22,6 +22,7 @@ public class LightSourceLine : MonoBehaviour, ILightSource
     [SerializeField] [Tooltip("Which object to create when creating a reflection, should be the Reflection prefab")] public GameObject Reflection;
     [SerializeField] [Tooltip("How many reflections are allowed")] [Range(1, 10)] public int Depth;
     [SerializeField] public bool StartOn;
+    [SerializeField] private bool Interactable;
 
     private Vector2 root => new Vector2(transform.position.x, transform.position.y);
     public Vector2 WorldCenter => transform.TransformPoint(transform.position);
@@ -37,6 +38,9 @@ public class LightSourceLine : MonoBehaviour, ILightSource
             meshRenderer.enabled = _on;
         }
     }
+
+    public bool UseInteract { get => Interactable; set => Interactable = value; }
+    public InteractReceiver interactReceiver { get; set; }
 
     private static int reflectionLayer;
     private List<GameObject> reflections;
@@ -60,6 +64,7 @@ public class LightSourceLine : MonoBehaviour, ILightSource
         Reflection = null;
         Depth = 4;
         StartOn = true;
+        Interactable = false;
     }
 
     private void Start()
@@ -73,6 +78,11 @@ public class LightSourceLine : MonoBehaviour, ILightSource
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.sortingLayerName = "UI";
         TurnedOn = StartOn;
+        if (UseInteract)
+        {
+            interactReceiver = GetComponent<InteractReceiver>();
+            interactReceiver.OnInteract += () => TurnedOn = !TurnedOn;
+        }
     }
 
     private void Update()
