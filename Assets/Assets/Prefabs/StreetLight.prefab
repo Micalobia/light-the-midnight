@@ -134,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Interactable: 1
   _on: 0
+  lightClip: {fileID: 8300000, guid: 30613d90948017543b2210f14be42018, type: 3}
 --- !u!114 &5118267495149238212
 MonoBehaviour:
   m_ObjectHideFlags: 0
