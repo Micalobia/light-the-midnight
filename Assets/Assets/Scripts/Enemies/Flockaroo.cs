@@ -138,7 +138,6 @@ public class Flockaroo : MonoBehaviour, IEnemy
     private void Shiny(ILightSource light)
     {
         Vector2 point = light.WorldCenter;
-        _patrolPoint2 = _patrolPoint1 = point;
         Vector3 difference = point - _center;
         float speed = ShinySpeed * Time.deltaTime;
         bool atDestination = difference.sqrMagnitude < speed * speed;
