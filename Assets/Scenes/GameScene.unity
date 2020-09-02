@@ -12826,6 +12826,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZootZoopFinalPrefab (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 675736854380830824, guid: 57eb5d2cadce83549a12cae404294a2c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 675736854568899632, guid: 57eb5d2cadce83549a12cae404294a2c, type: 3}
       propertyPath: m_SortingOrder
       value: 10
@@ -15153,6 +15157,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZootZoopFinalPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 675736854380830824, guid: 57eb5d2cadce83549a12cae404294a2c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 675736854568899632, guid: 57eb5d2cadce83549a12cae404294a2c, type: 3}
       propertyPath: m_SortingOrder
       value: 10
@@ -15754,6 +15762,10 @@ PrefabInstance:
     - target: {fileID: 2039762612642570145, guid: 34dd7bdd0927e204d8291885d734158a, type: 3}
       propertyPath: m_Name
       value: streetlight_off
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039762612642570145, guid: 34dd7bdd0927e204d8291885d734158a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34dd7bdd0927e204d8291885d734158a, type: 3}
