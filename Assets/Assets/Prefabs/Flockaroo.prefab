@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6475546796510683579}
   m_Layer: 0
   m_Name: Flockaroo
-  m_TagString: Untagged
+  m_TagString: HurtBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,6 +60,8 @@ MonoBehaviour:
   DiveCooldown: 5
   AgroRange: 12
   AgroSpeed: 6
+  OnAgroClip: {fileID: 8300000, guid: 06e3536797a60bc49b03bfbeabd0a52a, type: 3}
+  OnDeathClip: {fileID: 8300000, guid: e83df6fd16d9f3e48baa9678a1aedce1, type: 3}
 --- !u!212 &6475546796510683559
 SpriteRenderer:
   m_ObjectHideFlags: 0
