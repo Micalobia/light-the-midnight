@@ -12,6 +12,14 @@ public class Lamp : MonoBehaviour
 
     [SerializeField] private bool _on;
 
+    [SerializeField] private AudioClip lightClip;
+
+    private AudioSource clipSource;
+
+    private void Awake()
+    {
+        clipSource = gameObject.GetComponent<AudioSource>();
+    }
     private void Start()
     {
         _on = GetComponent<LightSourceHolder>().TurnedOn;
@@ -19,7 +27,11 @@ public class Lamp : MonoBehaviour
         if (Interactable)
         {
             _rec = GetComponent<InteractReceiver>();
-            _rec.OnInteract += () => _on = !_on;
+            _rec.OnInteract += () =>
+            {
+                _on = !_on;
+                clipSource.PlayOneShot(lightClip);
+            };
         }
     }
 
