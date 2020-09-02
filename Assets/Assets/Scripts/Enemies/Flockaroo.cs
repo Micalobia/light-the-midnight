@@ -18,12 +18,13 @@ public class Flockaroo : MonoBehaviour, IEnemy
     [Header("Shiny")]
     [SerializeField] private float ShinySpeed;
     [SerializeField] private float ShinyRange;
-    [Header("Combat")]
+    [Header("Dive")]
     [SerializeField] private float DiveRange;
     [SerializeField] private Vector2 DiveScale;
     [SerializeField] private float DiveAngle;
     [SerializeField] private float DiveTime;
     [SerializeField] private float DiveCooldown;
+    [Header("Agro")]
     [SerializeField] private float AgroRange;
     [SerializeField] private float AgroSpeed;
 
@@ -84,13 +85,15 @@ public class Flockaroo : MonoBehaviour, IEnemy
         Vector2 scaledMag = new Vector2(mag.x * DiveScale.x, mag.y * DiveScale.y);
         float playerSqr = scaledMag.sqrMagnitude;
         float dist = lightdist.Item2;
-        if(!_diving)
+        if (!_diving)
+        {
             if (nearest.TurnedOn && dist < ShinyRange) Shiny(nearest);
             else if (DiveRange * DiveRange > playerSqr) CheckDive();
-            if(!_diving)
+            if (!_diving)
                 if (AgroRange * AgroRange > playerSqr) Agro();
                 else Patrol();
-        UpdatePosition();
+                UpdatePosition();
+        }
         UpdateDirection();
     }
 
@@ -121,20 +124,20 @@ public class Flockaroo : MonoBehaviour, IEnemy
     private void Patrol()
     {
         _anim.SetBool("Agro", false);
-        Vector2 point = _movingTo2 ? PatrolPoint2 : PatrolPoint1;
-        Vector3 difference = point - _center;
-        float speed = PatrolSpeed * Time.deltaTime;
-        bool atDestination = difference.sqrMagnitude < speed * speed;
-        _velocity = (atDestination ? difference : difference.normalized * speed);
-        if (atDestination) _movingTo2 = !_movingTo2;
+        Pursue(PatrolSpeed);
     }
 
     private void Agro()
     {
         _anim.SetBool("Agro", true);
+        Pursue(AgroSpeed);
+    }
+
+    private void Pursue(float Speed)
+    {
         Vector2 point = _movingTo2 ? PatrolPoint2 : PatrolPoint1;
         Vector3 difference = point - _center;
-        float speed = AgroSpeed * Time.deltaTime;
+        float speed = Speed * Time.deltaTime;
         bool atDestination = difference.sqrMagnitude < speed * speed;
         _velocity = (atDestination ? difference : difference.normalized * speed);
         if (atDestination) _movingTo2 = !_movingTo2;
@@ -171,7 +174,8 @@ public class Flockaroo : MonoBehaviour, IEnemy
         if (health <= 0)
         {
             _dead = true;
-            _anim.SetBool("Dead", true);
+            _anim.SetTrigger("Kill");
+            _boxCol.enabled = false;
         }
     }
 
@@ -188,15 +192,11 @@ public class Flockaroo : MonoBehaviour, IEnemy
     private void Dive()
     {
         _diving = true;
-        _anim.SetBool("Diving", true);
+        _anim.SetTrigger("Dive");
         StartCoroutine(AnimateDive());
     }
 
-    private void StopDive()
-    {
-        _diving = false;
-        _anim.SetBool("Diving", false);
-    }
+    private void StopDive() => _diving = false;
 
     private IEnumerator AnimateDive()
     {
@@ -206,7 +206,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
         Func<float, float> genangle = (x) => DiveAngle * Mathf.Sin(Mathf.PI * x);
         float angle = 0, lastangle;
         freezeDive = transform.position;
-        Vector2 mag = PlayerCenter - freezeDive;
+        Vector2 freezePlayer = PlayerCenter;
         float s;
         while (true)
         {
@@ -216,7 +216,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
             s = scaletime(t);
             angle = genangle(s);
             transform.Rotate(Vector3.forward, angle - lastangle);
-            transform.position = freezeDive + mag * s;
+            transform.position = Vector2.LerpUnclamped(freezeDive,freezePlayer,s);
             yield return null;
         }
         _diveCooldown = Time.time;

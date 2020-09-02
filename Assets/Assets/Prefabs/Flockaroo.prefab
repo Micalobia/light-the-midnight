@@ -53,11 +53,11 @@ MonoBehaviour:
   PatrolSpeed: 4
   ShinySpeed: 8
   ShinyRange: 12
-  DiveRange: 0
+  DiveRange: 8
   DiveScale: {x: 1, y: 1}
   DiveAngle: 45
-  DiveTime: 2
-  DiveCooldown: 40
+  DiveTime: 1
+  DiveCooldown: 5
   AgroRange: 12
   AgroSpeed: 6
 --- !u!212 &6475546796510683559
@@ -121,7 +121,7 @@ Animator:
   m_GameObject: {fileID: 6475546796510683553}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a6a05449a60a11240909728aa85df8f4, type: 2}
+  m_Controller: {fileID: 9100000, guid: c052f1a5ee959ef4c8b12f422b80deb4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
