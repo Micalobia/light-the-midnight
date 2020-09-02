@@ -90,8 +90,12 @@ class Roak : MonoBehaviour
             gameObject.SetActive(true);
             _anim.SetBool("Ready", _ready = true);
         };
-        LightSourceHolder holder = FindObjectOfType<LightSourceHolder>();
-        if (holder != null) holder.OnLightTrigger += OnLightTrigger;
+        LightSourceHolder[] holders = FindObjectsOfType<LightSourceHolder>();
+        foreach(var holder in holders)
+        {
+            if (holder.transform.parent != null && holder.transform.parent.TryGetComponent(out LightSourceHolder _)) continue;
+            holder.OnLightTrigger += OnLightTrigger;
+        }
         _mainCol = GetComponent<CapsuleCollider2D>();
         _roakaudio = GetComponent<AudioSource>();
         _ableToAttack = true;

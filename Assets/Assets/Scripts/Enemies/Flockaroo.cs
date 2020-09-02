@@ -35,7 +35,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
     private Vector2 WorldCenter => transform.position;
     private Vector2 PlayerCenter => _player.position;
 
-    private LightSourceHolder _lights;
+    private List<LightSourceHolder> _lights;
     private bool _movingTo2;
     private Animator _anim;
     private bool _dead;
@@ -76,8 +76,14 @@ public class Flockaroo : MonoBehaviour, IEnemy
     private void Start()
     {
         _flockaudio = GetComponent<AudioSource>();
-        _lights = FindObjectOfType<LightSourceHolder>();
-        _lights.OnLightTrigger += OnLightTrigger;
+        LightSourceHolder[] l = FindObjectsOfType<LightSourceHolder>();
+        _lights = new List<LightSourceHolder>();
+        foreach(LightSourceHolder g in l)
+        {
+            if (g.transform.parent != null && g.transform.parent.TryGetComponent(out LightSourceHolder _)) continue;
+            g.OnLightTrigger += OnLightTrigger;
+            _lights.Add(g);
+        }
         OnValidate();
         transform.position = _patrolPoint1;
         _movingTo2 = true;
@@ -171,13 +177,16 @@ public class Flockaroo : MonoBehaviour, IEnemy
     {
         float minDist = float.PositiveInfinity;
         ILightSource minLight = null;
-        foreach (ILightSource light in _lights)
+        foreach (LightSourceHolder light in _lights)
         {
-            float d = (light.WorldCenter - _center).sqrMagnitude;
-            if (d < minDist)
+            foreach (ILightSource l in light)
             {
-                minLight = light;
-                minDist = d;
+                float d = (l.WorldCenter - _center).sqrMagnitude;
+                if (d < minDist)
+                {
+                    minLight = l;
+                    minDist = d;
+                }
             }
         }
         return (minLight, Mathf.Sqrt(minDist));
