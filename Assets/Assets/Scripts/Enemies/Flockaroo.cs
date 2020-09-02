@@ -104,7 +104,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
         if (!_diving)
         {
             if (nearest.TurnedOn && dist < ShinyRange) Shiny(nearest);
-            else if (DiveRange * DiveRange > playerSqr) CheckDive();
+            else if (DiveRange * DiveRange > playerSqr && _player.gameObject.activeInHierarchy) CheckDive();
             if (!_diving)
                 if (AgroRange * AgroRange > playerSqr) Agro();
                 else Patrol();
