@@ -15,8 +15,13 @@ public class ZootZoop : MonoBehaviour
     [SerializeField] private Transform zootZoopTM;
     [SerializeField] private GameObject spawnTrigger;
 
+    [SerializeField] private AudioClip zoopClip;
+    [SerializeField] private AudioClip zoopDeath;
+    private AudioSource zoopSource;
+
     private void Awake()
     {
+        zoopSource = gameObject.GetComponent<AudioSource>();
         zootZoopRB = GetComponent<Rigidbody2D>();
         zootZoopAnim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -55,6 +60,7 @@ public class ZootZoop : MonoBehaviour
 
     IEnumerator StartDeath()
     {
+        zoopSource.PlayOneShot(zoopDeath);
         yield return new WaitUntil(() => destroyTimer > maxDestroyTimer);
         destroyTimer = 0;
         zootZoopAnim.SetBool("hasSpawned", false);
@@ -65,6 +71,7 @@ public class ZootZoop : MonoBehaviour
 
     void Spawn()
     {
+        zoopSource.PlayOneShot(zoopClip);
         zootZoopAnim.SetBool("hasSpawned", true);
         hasSpawned = true;
 
