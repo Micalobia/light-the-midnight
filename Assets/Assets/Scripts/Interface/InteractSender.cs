@@ -15,6 +15,7 @@ public class InteractSender : MonoBehaviour
     private GameObject _player;
     private BoxCollider2D _trigger;
     private GameObject _interact;
+    private GameObject _empty;
     private bool _used;
     public event OnInteractDelegate OnInteract;
 
@@ -22,10 +23,10 @@ public class InteractSender : MonoBehaviour
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         _trigger = GetComponent<BoxCollider2D>();
+        _empty = new GameObject();
+        _empty.transform.SetParentClean(transform);
         _interact = Instantiate(InteractPrefab);
-        _interact.transform.SetParentClean(transform);
-        _interact.transform.position = Offset;
-        _interact.transform.localScale = Scale;
+        _interact.transform.SetParentClean(_empty.transform);
         _interact.SetActive(false);
         _used = false;
     }
@@ -42,10 +43,13 @@ public class InteractSender : MonoBehaviour
 
     private void Update()
     {
+        _interact.transform.localScale = Scale;
+        //_empty.transform.position = transform.TransformPoint(Offset);
         if (!_used && _interact.activeInHierarchy && Input.GetKeyDown(KeyCode.E))
         {
             _used = !Multiuse;
             OnInteract?.Invoke();
+            if (!Multiuse) _interact.SetActive(false);
         }
     }
 }
