@@ -86,9 +86,25 @@ public class LightSourceLine : MonoBehaviour, ILightSource
             }
             Destroy(reflectionsOld[i]);
         }
+        for (int i = 0; i < reflectionsOld.Count; i++) Destroy(reflectionsOld[i]);
         reflectionsOld = reflections.ToList();
         reflections = new List<GameObject>();
-        ConstructLight();
+        if (TurnedOn)
+        {
+            ConstructLight();
+        }
+        else
+        {
+            mesh.Clear();
+            mesh.vertices = new Vector3[0];
+            mesh.uv = new Vector2[0];
+            mesh.triangles = new int[0];
+            mesh.RecalculateBounds();
+            polyCol.enabled = false;
+        }
+        //reflectionsOld = reflections.ToList();
+        //reflections = new List<GameObject>();
+        //ConstructLight();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) => OnLightTrigger?.Invoke(ref collision);
@@ -126,6 +142,7 @@ public class LightSourceLine : MonoBehaviour, ILightSource
         polyCol.pathCount = 1;
         polyCol.SetPath(0, vertices);
         polyCol.enabled = TurnedOn;
+        mesh.Clear();
         mesh.vertices = vertices.ToVector3();
         mesh.uv = vertices;
         int[] triangles = new int[vertices.Length * 3];
@@ -182,8 +199,8 @@ public class LightSourceLine : MonoBehaviour, ILightSource
             source.Vector0 = cur.transform.InverseTransformPoint(transform.TransformPoint(rayInfos[i][0].hit));
             source.Vector1 = cur.transform.InverseTransformPoint(transform.TransformPoint(rayInfos[i][last].hit));
             source.RayCount = RayCount;
-            source.ViewDistance0 = Mathf.LerpUnclamped(ViewDistance0, ViewDistance1, rayInfos[i][0].lerp) - rayInfos[i][0].distance;
-            source.ViewDistance1 = Mathf.LerpUnclamped(ViewDistance0, ViewDistance1, rayInfos[i][last].lerp) - rayInfos[i][last].distance;
+            source.ViewDistance0 = Mathf.LerpUnclamped(ViewDistance0, ViewDistance1, rayInfos[i][0].lerp);// - rayInfos[i][0].distance;
+            source.ViewDistance1 = Mathf.LerpUnclamped(ViewDistance0, ViewDistance1, rayInfos[i][last].lerp);// - rayInfos[i][last].distance;
             source.Reflection = Reflection;
             source.Layers = Layers;
             source.transform.parent = transform;
