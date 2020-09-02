@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 1045399934}
   - component: {fileID: 1045399935}
   - component: {fileID: 1045399933}
-  m_Layer: 0
+  - component: {fileID: 5431904859463624154}
+  m_Layer: 10
   m_Name: RayCastPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,6 +135,27 @@ MonoBehaviour:
   Reflection: {fileID: 3600170181974361477, guid: 6040d8b2f668749478d7302bc57fea81, type: 3}
   Depth: 4
   StartOn: 0
+--- !u!50 &5431904859463624154
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7745234616833825026}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7745234617364162766
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +405,7 @@ MonoBehaviour:
   Damage: 1
   Knockback: 20
   ArmDeadzone: 10
+  RecoveryTime: 0
   isInvincible: 0
   pickupValue: 1
   maxHealth: 3
