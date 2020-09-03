@@ -250,6 +250,6 @@ public class LightSourceLine : MonoBehaviour, ILightSource
                 lerp = t
             };
         }
-        else return new RayInfo(angleVector * viewDistance / transform.lossyScale.x, Vector2.up, angleVector, viewDistance, false);
+        return new RayInfo(origin + angleVector * viewDistance, Vector2.up, angleVector, viewDistance, false);
     }
 }
