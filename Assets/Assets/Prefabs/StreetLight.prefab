@@ -402,10 +402,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vector0: {x: -1.95, y: -0.35, z: 0}
   Angle0: -100
-  ViewDistance0: 8
+  ViewDistance0: 50
   Vector1: {x: 1.95, y: 0.35, z: 0}
   Angle1: -65
-  ViewDistance1: 8
+  ViewDistance1: 50
   RayCount: 90
   Layers:
     serializedVersion: 2
