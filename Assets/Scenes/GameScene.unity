@@ -16907,6 +16907,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3993203842067260618, guid: f3556f778ce06ee4a8ad316c64f1f8a5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3993203842067260619, guid: f3556f778ce06ee4a8ad316c64f1f8a5, type: 3}
       propertyPath: m_Name
       value: Zoop
@@ -20258,7 +20262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7745234618516114168, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -55.2
+      value: 54.1
       objectReference: {fileID: 0}
     - target: {fileID: 7745234618516114168, guid: 0f1edf23a4d2bc74ca86431a7d236198, type: 3}
       propertyPath: m_LocalPosition.y
