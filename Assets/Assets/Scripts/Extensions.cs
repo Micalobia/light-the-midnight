@@ -102,6 +102,11 @@ public static class VectorExtension
     /// </summary>
     public static Vector3 Reflect(this Vector3 vector, Vector3 normal) => -(2 * (Vector3.Dot(vector, normal)) * normal - vector);
 
+    /// <summary>
+    /// Sets this objects parent, and resets the local scale and position
+    /// </summary>
+    /// <param name="child">The child</param>
+    /// <param name="parent">The parent</param>
     public static void SetParentClean(this Transform child, Transform parent)
     {
         child.parent = parent;
@@ -109,6 +114,25 @@ public static class VectorExtension
         child.localRotation = Quaternion.identity;
         child.localScale = Vector3.one;
     }
+
+    /// <summary>
+    /// Returns the vector with all coordinates equal to 1 divided by their value, or 0 if it's 0
+    /// </summary>
+    /// <param name="vec">The vector</param>
+    /// <returns>The inverted vector</returns>
+    public static Vector3 Inverse(this Vector3 vec) => new Vector3(vec.x == 0f ? 0f : 1f / vec.x, vec.y == 0f ? 0f : 1f / vec.y, vec.z == 0f ? 0f : 1f / vec.z);
+
+    /// <summary>
+    /// Returns the vector with all coordinates equal to 1 divided by their value, or 0 if it's 0
+    /// </summary>
+    /// <param name="vec">The vector</param>
+    /// <returns>The inverted vector</returns>
+    public static Vector2 Inverse(this Vector2 vec) => new Vector2(vec.x == 0f ? 0f : 1f / vec.x, vec.y == 0f ? 0f : 1f / vec.y);
+
+    /// <summary>
+    /// Checks if an object is destroyed
+    /// </summary>
+    public static bool IsDestroyed(this GameObject gameObject) => gameObject == null && !ReferenceEquals(gameObject, null);
 }
 
 public struct Edge

@@ -90,8 +90,12 @@ class Roak : MonoBehaviour
             gameObject.SetActive(true);
             _anim.SetBool("Ready", _ready = true);
         };
-        LightSourceHolder holder = FindObjectOfType<LightSourceHolder>();
-        if (holder != null) holder.OnLightTrigger += OnLightTrigger;
+        LightSourceHolder[] holders = FindObjectsOfType<LightSourceHolder>();
+        foreach (var holder in holders)
+        {
+            if (holder.transform.parent != null && holder.transform.parent.TryGetComponent(out LightSourceHolder _)) continue;
+            holder.OnLightTrigger += OnLightTrigger;
+        }
         _mainCol = GetComponent<CapsuleCollider2D>();
         _roakaudio = GetComponent<AudioSource>();
         _ableToAttack = true;
@@ -112,7 +116,7 @@ class Roak : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_ableToAttack && collision.gameObject == _player)
+        if (!_dead && _ableToAttack && collision.gameObject == _player)
         {
             _playerController.DamagePlayer(1);
             _anim.SetTrigger("Attacking");
@@ -139,13 +143,13 @@ class Roak : MonoBehaviour
     private void SetAgro(bool value)
     {
         if (value && !_agro)
-        _roakaudio.PlayOneShot(OnAgroClip);
+            _roakaudio.PlayOneShot(OnAgroClip);
         _agro = value;
         _anim.SetBool("Agro", value);
     }
     private void Agro()
     {
-        if(!_player.activeInHierarchy)
+        if (!_player.activeInHierarchy)
         {
             Patrol();
             return;
@@ -164,15 +168,13 @@ class Roak : MonoBehaviour
     private void StartDeath()
     {
         if (!_dead)
-        _dead = true;
+            _dead = true;
         _anim.SetBool("Dead", true);
+        _mainCol.enabled = false;
     }
 
 
-    private void DeathNoise()
-    {
-        _roakaudio.PlayOneShot(OnDeathClip);
-    }
+    private void DeathNoise() => _roakaudio.PlayOneShot(OnDeathClip);
     private void Die() => Destroy(gameObject);
     private void Spawned() => _spawned = true;
 }

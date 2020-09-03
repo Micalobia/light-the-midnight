@@ -24,6 +24,8 @@ public class BossController : MonoBehaviour
     {
 
     }
+    void enableEye(int index) => eyes[index].enableCollision();
+    void disableEye(int index) => eyes[index].disableCollision();
 
     // Update is called once per frame
     void Update()

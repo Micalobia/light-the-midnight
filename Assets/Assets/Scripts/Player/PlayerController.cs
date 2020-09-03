@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public int Damage;
     [SerializeField] public float Knockback;
     [SerializeField] [Range(0f, 90f)] public float ArmDeadzone = 10f;
+    [SerializeField] public float RecoveryTime;
 
     [SerializeField] private bool isInvincible;
     [SerializeField] private int pickupValue;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
         Knockback = 20;
         MovementSmoothing = .05f;
         ArmDeadzone = 10f;
+        RecoveryTime = 0.75f;
     }
 
     void Awake()
@@ -84,6 +86,7 @@ public class PlayerController : MonoBehaviour
         {
             Health -= damage;
             CheckHealth();
+            StartCoroutine(IFrames());
         }
     }
 
@@ -98,7 +101,6 @@ public class PlayerController : MonoBehaviour
         {
             Health += pickupValue;
             Destroy(hitBox.gameObject);
-
         }
     }
 
@@ -114,6 +116,13 @@ public class PlayerController : MonoBehaviour
         {
             DamagePlayer(Damage);
         }
+    }
+
+    private IEnumerator IFrames()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(RecoveryTime);
+        isInvincible = false;
     }
 
     #region Movement
@@ -250,10 +259,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator SceneLoadOnDeath()
     {
         yield return new WaitForSeconds(playerAnim.GetCurrentAnimatorStateInfo(0).length + playerAnim.GetCurrentAnimatorStateInfo(0).normalizedTime);
-        if (SceneManager.GetActiveScene().name == "BossFight")
-        {
-            SceneManager.LoadScene("BossFight");
-        }
+        Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
 
     }
 

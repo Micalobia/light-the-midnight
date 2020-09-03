@@ -37,6 +37,9 @@ public class LightSourceHolder : MonoBehaviour, ILightSource, IEnumerable<ILight
         }
     }
     public Vector2 WorldCenter => transform.TransformPoint(transform.position);
+    [SerializeField] private bool Interactable;
+    public bool UseInteract { get => Interactable; set => Interactable = value; }
+    public InteractReceiver interactReceiver { get; set; }
 
     private LightSourceLine[] _a;
     private LightSourcePoint[] _b;
@@ -49,6 +52,11 @@ public class LightSourceHolder : MonoBehaviour, ILightSource, IEnumerable<ILight
         List<LightSourceHolder> c = GetComponentsInChildren<LightSourceHolder>().ToList();
         c.Remove(this);
         _c = c.ToArray();
+        if (UseInteract)
+        {
+            interactReceiver = GetComponent<InteractReceiver>();
+            interactReceiver.OnInteract += () => TurnedOn = !TurnedOn;
+        }
     }
 
     public IEnumerator<ILightSource> GetEnumerator()

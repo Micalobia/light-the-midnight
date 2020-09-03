@@ -16,6 +16,7 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
     [SerializeField] [Tooltip("Which object to create when creating a reflection, should be the Reflection prefab")] GameObject Reflection;
     [SerializeField] [Tooltip("How many reflections are allowed")] [Range(1, 10)] int Depth;
     [SerializeField] bool StartOn;
+    [SerializeField] private bool Interactable;
 
     private static int reflectionLayer;
     private List<GameObject> reflections;
@@ -39,6 +40,8 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
         }
     }
     public Vector2 WorldCenter => transform.parent.TransformPoint(transform.position);
+    public bool UseInteract { get => Interactable; set => Interactable = value; }
+    public InteractReceiver interactReceiver { get; set; }
 
     private void Reset()
     {
@@ -58,16 +61,43 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
         reflections = new List<GameObject>();
         reflectionsOld = new List<GameObject>();
         meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.sortingLayerName = "UI";
         TurnedOn = StartOn;
         transform.lossyScale.Set(1, 1, 1);
+        if (UseInteract)
+        {
+            interactReceiver = GetComponent<InteractReceiver>();
+            interactReceiver.OnInteract += () => TurnedOn = !TurnedOn;
+        }
     }
 
     private void Update()
     {
+        for (int i = 0; i < reflectionsOld.Count; i++)
+        {
+            foreach (Transform t in reflectionsOld[i].transform)
+            {
+                t.parent = transform;
+                reflections.Add(t.gameObject);
+            }
+            Destroy(reflectionsOld[i]);
+        }
         for (int i = 0; i < reflectionsOld.Count; i++) Destroy(reflectionsOld[i]);
         reflectionsOld = reflections.ToList();
         reflections = new List<GameObject>();
-        ConstructLight();
+        if (TurnedOn)
+        {
+            ConstructLight();
+        }
+        else
+        {
+            mesh.Clear();
+            mesh.vertices = new Vector3[0];
+            mesh.uv = new Vector2[0];
+            mesh.triangles = new int[0];
+            mesh.RecalculateBounds();
+            polyCol.enabled = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) => OnLightTrigger?.Invoke(ref collision);
@@ -102,6 +132,7 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
         polyCol.pathCount = 1;
         polyCol.SetPath(0, vertices);
         polyCol.enabled = TurnedOn;
+        mesh.Clear();
         mesh.vertices = vertices.ToVector3();
         mesh.uv = vertices;
         int[] triangles = new int[vertices.Length * 3];
@@ -115,8 +146,10 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
         mesh.RecalculateBounds();
         if (Depth == 1) return;
         for (int i = 0; i < rayInfos.Count; i++)
+        {
             if (rayInfos[i].Count < 2)
                 rayInfos.RemoveAt(i--);
+        }
         for (int i = 0; i < rayInfos.Count; i++)
         {
             int last = rayInfos[i].Count - 1;
@@ -129,8 +162,8 @@ public class LightSourcePoint : MonoBehaviour, ILightSource
             source.Vector0 = cur.transform.InverseTransformPoint(transform.TransformPoint(rayInfos[i][0].hit));
             source.Vector1 = cur.transform.InverseTransformPoint(transform.TransformPoint(rayInfos[i][last].hit));
             source.RayCount = RayCount;
-            source.ViewDistance0 = ViewDistance - rayInfos[i][0].distance;
-            source.ViewDistance1 = ViewDistance - rayInfos[i][last].distance;
+            source.ViewDistance0 = ViewDistance;// - rayInfos[i][0].distance;
+            source.ViewDistance1 = ViewDistance;// - rayInfos[i][last].distance;
             source.Reflection = Reflection;
             source.Layers = Layers;
             source.transform.parent = transform;
