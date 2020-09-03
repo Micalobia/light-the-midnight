@@ -12,25 +12,31 @@ public class Flockaroo : MonoBehaviour, IEnemy
     public virtual float health => Health;
     [SerializeField] protected float Health = 100f;
     [Header("Patrol")]
+    [SerializeField] private float PatrolSpeed;
     [SerializeField] private Vector2 PatrolPoint1;
     [SerializeField] private Vector2 PatrolPoint2;
-    [SerializeField] private float PatrolSpeed;
     [Header("Shiny")]
     [SerializeField] private float ShinySpeed;
     [SerializeField] private float ShinyRange;
-    [Header("Combat")]
+    [SerializeField] private bool CanDieToFlashlight;
+    [Header("Dive")]
     [SerializeField] private float DiveRange;
     [SerializeField] private Vector2 DiveScale;
     [SerializeField] private float DiveAngle;
     [SerializeField] private float DiveTime;
     [SerializeField] private float DiveCooldown;
+    [Header("Agro")]
     [SerializeField] private float AgroRange;
     [SerializeField] private float AgroSpeed;
+    [Header("Audio")]
+    [SerializeField] private AudioClip OnAgroClip;
+    [SerializeField] private AudioClip OnDeathClip;
+    private AudioSource _flockaudio;
 
     private Vector2 WorldCenter => transform.position;
     private Vector2 PlayerCenter => _player.position;
 
-    private LightSourceHolder _lights;
+    private List<LightSourceHolder> _lights;
     private bool _movingTo2;
     private Animator _anim;
     private bool _dead;
@@ -43,6 +49,8 @@ public class Flockaroo : MonoBehaviour, IEnemy
     private Vector2 freezeDive;
     private float _diveCooldown;
     private Transform _player;
+    private Vector2 _patrolPoint1;
+    private Vector2 _patrolPoint2;
 
     private void Reset()
     {
@@ -56,13 +64,29 @@ public class Flockaroo : MonoBehaviour, IEnemy
         DiveRange = 8f;
         AgroRange = 16f;
         AgroSpeed = 6f;
+        DiveScale = Vector2.one;
+        DiveAngle = 45f;
+    }
+
+    private void OnValidate()
+    {
+        _patrolPoint1 = transform.TransformPoint(Vector3.Scale(PatrolPoint1, transform.lossyScale.Inverse()));
+        _patrolPoint2 = transform.TransformPoint(Vector3.Scale(PatrolPoint2, transform.lossyScale.Inverse()));
     }
 
     private void Start()
     {
-        _lights = FindObjectOfType<LightSourceHolder>();
-        _lights.OnLightTrigger += OnLightTrigger;
-        transform.position = PatrolPoint1;
+        _flockaudio = GetComponent<AudioSource>();
+        LightSourceHolder[] l = FindObjectsOfType<LightSourceHolder>();
+        _lights = new List<LightSourceHolder>();
+        foreach(LightSourceHolder g in l)
+        {
+            if (g.transform.parent != null && g.transform.parent.TryGetComponent(out LightSourceHolder _)) continue;
+            g.OnLightTrigger += OnLightTrigger;
+            _lights.Add(g);
+        }
+        OnValidate();
+        transform.position = _patrolPoint1;
         _movingTo2 = true;
         _anim = GetComponent<Animator>();
         _dead = false;
@@ -70,6 +94,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
         _boxCol = GetComponent<BoxCollider2D>();
         _diving = false;
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        if (CanDieToFlashlight) _player.GetComponent<Weapon>().OnLightTrigger += OnLightTrigger;
         _diveCooldown = float.NegativeInfinity;
     }
 
@@ -84,13 +109,15 @@ public class Flockaroo : MonoBehaviour, IEnemy
         Vector2 scaledMag = new Vector2(mag.x * DiveScale.x, mag.y * DiveScale.y);
         float playerSqr = scaledMag.sqrMagnitude;
         float dist = lightdist.Item2;
-        if(!_diving)
+        if (!_diving)
+        {
             if (nearest.TurnedOn && dist < ShinyRange) Shiny(nearest);
-            else if (DiveRange * DiveRange > playerSqr) CheckDive();
-            if(!_diving)
+            else if (DiveRange * DiveRange > playerSqr && _player.gameObject.activeInHierarchy) CheckDive();
+            if (!_diving)
                 if (AgroRange * AgroRange > playerSqr) Agro();
                 else Patrol();
-        UpdatePosition();
+            UpdatePosition();
+        }
         UpdateDirection();
     }
 
@@ -111,7 +138,6 @@ public class Flockaroo : MonoBehaviour, IEnemy
     private void Shiny(ILightSource light)
     {
         Vector2 point = light.WorldCenter;
-        PatrolPoint2 = PatrolPoint1 = point;
         Vector3 difference = point - _center;
         float speed = ShinySpeed * Time.deltaTime;
         bool atDestination = difference.sqrMagnitude < speed * speed;
@@ -121,20 +147,20 @@ public class Flockaroo : MonoBehaviour, IEnemy
     private void Patrol()
     {
         _anim.SetBool("Agro", false);
-        Vector2 point = _movingTo2 ? PatrolPoint2 : PatrolPoint1;
-        Vector3 difference = point - _center;
-        float speed = PatrolSpeed * Time.deltaTime;
-        bool atDestination = difference.sqrMagnitude < speed * speed;
-        _velocity = (atDestination ? difference : difference.normalized * speed);
-        if (atDestination) _movingTo2 = !_movingTo2;
+        Pursue(PatrolSpeed);
     }
 
     private void Agro()
     {
         _anim.SetBool("Agro", true);
-        Vector2 point = _movingTo2 ? PatrolPoint2 : PatrolPoint1;
+        Pursue(AgroSpeed);
+    }
+
+    private void Pursue(float Speed)
+    {
+        Vector2 point = _movingTo2 ? _patrolPoint2 : _patrolPoint1;
         Vector3 difference = point - _center;
-        float speed = AgroSpeed * Time.deltaTime;
+        float speed = Speed * Time.deltaTime;
         bool atDestination = difference.sqrMagnitude < speed * speed;
         _velocity = (atDestination ? difference : difference.normalized * speed);
         if (atDestination) _movingTo2 = !_movingTo2;
@@ -152,13 +178,16 @@ public class Flockaroo : MonoBehaviour, IEnemy
     {
         float minDist = float.PositiveInfinity;
         ILightSource minLight = null;
-        foreach (ILightSource light in _lights)
+        foreach (LightSourceHolder light in _lights)
         {
-            float d = (light.WorldCenter - _center).sqrMagnitude;
-            if (d < minDist)
+            foreach (ILightSource l in light)
             {
-                minLight = light;
-                minDist = d;
+                float d = (l.WorldCenter - _center).sqrMagnitude;
+                if (d < minDist)
+                {
+                    minLight = l;
+                    minDist = d;
+                }
             }
         }
         return (minLight, Mathf.Sqrt(minDist));
@@ -170,8 +199,10 @@ public class Flockaroo : MonoBehaviour, IEnemy
 
         if (health <= 0)
         {
+            _flockaudio.PlayOneShot(OnDeathClip);
             _dead = true;
-            _anim.SetBool("Dead", true);
+            _anim.SetTrigger("Kill");
+            _boxCol.enabled = false;
         }
     }
 
@@ -187,16 +218,13 @@ public class Flockaroo : MonoBehaviour, IEnemy
 
     private void Dive()
     {
+        _flockaudio.PlayOneShot(OnAgroClip);
         _diving = true;
-        _anim.SetBool("Diving", true);
+        _anim.SetTrigger("Dive");
         StartCoroutine(AnimateDive());
     }
 
-    private void StopDive()
-    {
-        _diving = false;
-        _anim.SetBool("Diving", false);
-    }
+    private void StopDive() => _diving = false;
 
     private IEnumerator AnimateDive()
     {
@@ -206,7 +234,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
         Func<float, float> genangle = (x) => DiveAngle * Mathf.Sin(Mathf.PI * x);
         float angle = 0, lastangle;
         freezeDive = transform.position;
-        Vector2 mag = PlayerCenter - freezeDive;
+        Vector2 freezePlayer = PlayerCenter;
         float s;
         while (true)
         {
@@ -216,7 +244,7 @@ public class Flockaroo : MonoBehaviour, IEnemy
             s = scaletime(t);
             angle = genangle(s);
             transform.Rotate(Vector3.forward, angle - lastangle);
-            transform.position = freezeDive + mag * s;
+            transform.position = Vector2.LerpUnclamped(freezeDive, freezePlayer, s);
             yield return null;
         }
         _diveCooldown = Time.time;

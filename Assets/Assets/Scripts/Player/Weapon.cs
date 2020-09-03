@@ -67,6 +67,8 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    private void OnDisable() => source.TurnedOn = false;
+
     IEnumerator Shoot()
     {
         //RaycastHit2D projectLaser = Physics2D.Raycast(laserPoint.position, laserPoint.right);
