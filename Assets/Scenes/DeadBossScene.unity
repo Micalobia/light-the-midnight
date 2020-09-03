@@ -1306,6 +1306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1222877855}
   - component: {fileID: 1222877854}
+  - component: {fileID: 1222877856}
   - component: {fileID: 1222877853}
   m_Layer: 0
   m_Name: Portal_Interact
@@ -1323,10 +1324,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1222877852}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 465078f977e441c43b1275f22f91c8f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 138a9f032d0bd3a48a1f1db3e1d9634f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portalInteract: {fileID: 416972325}
+  scene: Credits
 --- !u!61 &1222877854
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1361,12 +1362,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222877852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.17, y: -1.82, z: -18.082214}
+  m_LocalPosition: {x: -0.17, y: -1.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1222877856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222877852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630bea4d0d866444fa0e25bebf423af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 0, y: 0}
+  Scale: {x: 0.4, y: 0.4}
+  InteractPrefab: {fileID: 2542479927691431425, guid: 6162dad31a96509428f06b7fc26f81ac, type: 3}
+  Multiuse: 0
 --- !u!1001 &1223682002
 PrefabInstance:
   m_ObjectHideFlags: 0
