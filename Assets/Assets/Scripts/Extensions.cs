@@ -128,6 +128,11 @@ public static class VectorExtension
     /// <param name="vec">The vector</param>
     /// <returns>The inverted vector</returns>
     public static Vector2 Inverse(this Vector2 vec) => new Vector2(vec.x == 0f ? 0f : 1f / vec.x, vec.y == 0f ? 0f : 1f / vec.y);
+
+    /// <summary>
+    /// Checks if an object is destroyed
+    /// </summary>
+    public static bool IsDestroyed(this GameObject gameObject) => gameObject == null && !ReferenceEquals(gameObject, null);
 }
 
 public struct Edge
