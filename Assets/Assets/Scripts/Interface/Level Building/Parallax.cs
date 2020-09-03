@@ -20,6 +20,8 @@ class Parallax : MonoBehaviour
         Scales = new Vector2[Count];
     }
 
+    private void Awake() => OnValidate();
+
     private void OnValidate()
     {
         List<GameObject> gameObjects = new List<GameObject>();
