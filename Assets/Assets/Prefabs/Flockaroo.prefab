@@ -54,12 +54,13 @@ MonoBehaviour:
   PatrolPoint2: {x: 7.5, y: 3}
   ShinySpeed: 8
   ShinyRange: 12
+  CanDieToFlashlight: 0
   DiveRange: 8
   DiveScale: {x: 1, y: 1}
   DiveAngle: 45
-  DiveTime: 1
-  DiveCooldown: 5
-  AgroRange: 9
+  DiveTime: 1.25
+  DiveCooldown: 5.5
+  AgroRange: 8
   AgroSpeed: 6
   OnAgroClip: {fileID: 8300000, guid: 06e3536797a60bc49b03bfbeabd0a52a, type: 3}
   OnDeathClip: {fileID: 8300000, guid: e83df6fd16d9f3e48baa9678a1aedce1, type: 3}
